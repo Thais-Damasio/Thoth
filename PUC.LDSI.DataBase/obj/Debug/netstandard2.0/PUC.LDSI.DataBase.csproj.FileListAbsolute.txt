@@ -1,0 +1,6 @@
+C:\Users\cecilia.mariar\source\repos\PUC.LDSI\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.DataBase.deps.json
+C:\Users\cecilia.mariar\source\repos\PUC.LDSI\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.DataBase.dll
+C:\Users\cecilia.mariar\source\repos\PUC.LDSI\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.csproj.CoreCompileInputs.cache
+C:\Users\cecilia.mariar\source\repos\PUC.LDSI\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.AssemblyInfoInputs.cache
+C:\Users\cecilia.mariar\source\repos\PUC.LDSI\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.AssemblyInfo.cs
+C:\Users\cecilia.mariar\source\repos\PUC.LDSI\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.csprojAssemblyReference.cache
