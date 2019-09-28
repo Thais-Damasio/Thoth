@@ -14,7 +14,8 @@ namespace PUC.LDSI.Domain.Entities
         public int Id { get; set; }
         public string Descricao { get; set; }
         public bool Resposta { get; set; }
-        public int IdQuestao { get; set; }
+        [ForeignKey("AvaliacaoQuestao")]
+        public int IdAvaliacaoQuestao { get; set; }
 
         //Relacionamentos
         public AvaliacaoQuestao Questao { get; set; }

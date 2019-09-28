@@ -15,10 +15,12 @@ namespace PUC.LDSI.Domain.Entities
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
         public int Valor { get; set; }
+        [ForeignKey("Avaliacao")]
         public int IdAvaliacao { get; set; }
 
         //Relacionamentos
         public Avaliacao Avaliacao { get; set; }
-     
+        public Turma Turma { get; set; }
+
     }
 }

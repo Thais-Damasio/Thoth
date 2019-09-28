@@ -12,7 +12,9 @@ namespace PUC.LDSI.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
         public int Id { get; set; }
+        [ForeignKey("Aluno")]
         public int IdAluno { get; set; }
+        [ForeignKey("Avaliacao")]
         public int IdAvaliacao { get; set; }
 
         //Relacionamentos

@@ -12,6 +12,7 @@ namespace PUC.LDSI.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
         public int Id { get; set; }
+        [StringLength(150)]
         public string Nome { get; set; }
 
         //Relacionamentos

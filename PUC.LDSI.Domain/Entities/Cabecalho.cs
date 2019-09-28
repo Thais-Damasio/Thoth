@@ -7,6 +7,5 @@ namespace PUC.LDSI.Domain.Entities
         //Atributos de apoio
         public DateTime CriadoEm { get; set; }
         public DateTime AtualizadoEm { get; set; }
-
     }
 }

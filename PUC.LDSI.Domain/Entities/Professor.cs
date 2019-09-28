@@ -12,7 +12,9 @@ namespace PUC.LDSI.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
         public int Id { get; set; }
+        [StringLength(150)]
         public string Nome { get; set; }
+        [StringLength(150)]
         public string Email { get; set; }
         public int Matricula { get; set; }
         public string Senha { get; set; }

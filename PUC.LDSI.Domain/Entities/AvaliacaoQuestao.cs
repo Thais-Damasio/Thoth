@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
-{
+{ 
     public class AvaliacaoQuestao : Cabecalho
     {
         [Key]
@@ -14,6 +14,7 @@ namespace PUC.LDSI.Domain.Entities
         public int Id { get; set; }
         public int Tipo { get; set; }
         public string Enunciado { get; set; }
+        [ForeignKey("Avaliacao")]
         public int IdAvaliacao { get; set; }
     
         //Relacionamentos

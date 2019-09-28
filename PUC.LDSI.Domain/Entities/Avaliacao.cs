@@ -14,7 +14,9 @@ namespace PUC.LDSI.Domain.Entities
         public int Id { get; set; }
         public string Materia { get; set; }
         public string Descricao { get; set; }
+        [ForeignKey("Professor")]
         public int IdProfessor { get; set; }
+        [ForeignKey("Disciplina")]
         public int IdDisciplina { get; set; }
 
         //Relacionamentos
