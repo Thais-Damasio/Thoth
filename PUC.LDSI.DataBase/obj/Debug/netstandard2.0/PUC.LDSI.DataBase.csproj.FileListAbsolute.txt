@@ -16,3 +16,15 @@ C:\Users\cecilia.mariar\Source\Repos\Thoth\PUC.LDSI.DataBase\obj\Debug\netstanda
 C:\Users\cecilia.mariar\Source\Repos\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.csproj.CopyComplete
 C:\Users\cecilia.mariar\Source\Repos\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.dll
 C:\Users\cecilia.mariar\Source\Repos\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.pdb
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.DataBase.deps.json
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.DataBase.dll
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.DataBase.pdb
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.Domain.dll
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\bin\Debug\netstandard2.0\PUC.LDSI.Domain.pdb
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.csprojAssemblyReference.cache
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.csproj.CoreCompileInputs.cache
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.AssemblyInfoInputs.cache
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.AssemblyInfo.cs
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.csproj.CopyComplete
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.dll
+C:\Users\thais\Pictures\Thoth\Thoth\PUC.LDSI.DataBase\obj\Debug\netstandard2.0\PUC.LDSI.DataBase.pdb
