@@ -1,1 +1,7 @@
 .vs
+PUC.LDSI.Database/bin
+PUC.LDSI.Database/obj
+PUC.LDSI.Domain/bin
+PUC.LDSI.Domain/obj
+PUC.LDSI.ModuloProfessor/bin
+PUC.LDSI.ModuloProfessor/obj
