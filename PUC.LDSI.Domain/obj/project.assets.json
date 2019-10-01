@@ -4118,11 +4118,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.Domain\\PUC.LDSI.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.Domain\\PUC.LDSI.Domain.csproj",
       "projectName": "PUC.LDSI.Domain",
-      "projectPath": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.Domain\\PUC.LDSI.Domain.csproj",
+      "projectPath": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.Domain\\PUC.LDSI.Domain.csproj",
       "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.Domain\\obj\\",
+      "outputPath": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

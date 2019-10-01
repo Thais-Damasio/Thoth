@@ -7313,7 +7313,6 @@
       "path": "runtime.osx.10.10-x64.runtime.native.system.security.cryptography.apple/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.osx.10.10-x64.runtime.native.system.security.cryptography.apple.4.3.0.nupkg.sha512",
@@ -11840,11 +11839,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.ModuloProfessor\\PUC.LDSI.ModuloProfessor.csproj",
+      "projectUniqueName": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.ModuloProfessor\\PUC.LDSI.ModuloProfessor.csproj",
       "projectName": "PUC.LDSI.ModuloProfessor",
-      "projectPath": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.ModuloProfessor\\PUC.LDSI.ModuloProfessor.csproj",
+      "projectPath": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.ModuloProfessor\\PUC.LDSI.ModuloProfessor.csproj",
       "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.ModuloProfessor\\obj\\",
+      "outputPath": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.ModuloProfessor\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11863,8 +11862,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj": {
-              "projectPath": "C:\\Users\\thais\\Desktop\\Trabalhos 2019\\PSI\\Thoth\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj"
+            "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj": {
+              "projectPath": "C:\\Users\\thais\\Pictures\\Thoth\\Thoth\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj"
             }
           }
         }
