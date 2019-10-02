@@ -22,7 +22,7 @@ namespace PUC.LDSI.DataBase.Repository
         public Professor ObterPorLogin(string login)
         {
             var retorno = _context.Professores
-           .Where(x => x.Login == login).FirstOrDefault();
+           .Where(x => x.Email == login).FirstOrDefault();
             return retorno;
         }
     }
