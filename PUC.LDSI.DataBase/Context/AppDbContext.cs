@@ -1,6 +1,4 @@
-﻿//using Microsoft.Analytics.Interfaces;
-//using Microsoft.Analytics.Types.Sql;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.Domain.Entities;
 using System.Linq;
 

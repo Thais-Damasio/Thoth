@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Repository
 {
-    interface IProvaRepository
+    public interface IProvaRepository
     {
     }
 }

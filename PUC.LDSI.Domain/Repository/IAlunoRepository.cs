@@ -5,7 +5,7 @@ namespace PUC.LDSI.Domain.Repository
 {
     public interface IAlunoRepository
     {
-        Task<int> IncluirNovoProfessorAsync(Professor professor);
-        Professor ObterPorLogin(string login);
+        Task<int> IncluirNovoAlunoAsync(Aluno aluno);
+        Aluno ObterPorLogin(string login);
     }
 }
