@@ -12,10 +12,12 @@ namespace PUC.LDSI.Domain.Services
         {
             _professorRepository = professorRepository;
         }
-        public async Task<int> IncluirNovoProfessorAsync(string login, string nome)
+        public async Task<int> IncluirNovoProfessorAsync(string email, string nome)
         {
-            var professor = new Professor() { Nome = nome, Login = login };
-            return await _professorRepository.IncluirNovoProfessorAsync(professor);
+            var professor = new Professor() { Nome = nome, Email = email };
+            _professorRepository.Adicionar(professor);
+            await _professorRepository.SaveChangesAsync();
+            return professor.Id;
         }
     }
 }

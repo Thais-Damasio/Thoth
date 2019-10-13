@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PUC.LDSI.Domain.Entities.Turma>
+
+@{
+    ViewData["Title"] = "Turmas";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-margin-large"></div>
+            <div class="uk-overflow-auto uk-margin-right uk-margin-left">
+                <table class="uk-table uk-width-1-2 uk-table-hover uk-table-small uk-table-divider uk-background-muted uk-horizontal-center">
+                    <caption>
+                        <div class="uk-margin">
+                            <a asp-action="Create" class="uk-button uk-button-primary">Criar Turma</a>
+                        </div>
+                    </caption>
+                    <caption class="uk-text-center">
+                        <h2 class="uk-text-white">Turmas</h2>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Nome)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.AtualizadoEm)
+                            </th>
+                            <th class="uk-table-small"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AtualizadoEm)
+                                    </td>
+                                    <td>
+                                        <a class="uk-margin-small-right" uk-tooltip="Editar" asp-action="Edit" asp-route-id="@item.Id" uk-icon="icon: file-edit"></a>
+                                        <span class="uk-margin-large-right"></span>
+                                        <a asp-action="Delete" uk-tooltip="Apagar" asp-route-id="@item.Id" class="uk-hover-danger" uk-icon="icon: trash"></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="uk-text-center" colspan="7">
+                                    <img class="uk-display-block uk-align-center" width="60" src="~/images/empty.png" />
+                                    <span class="uk-text-muted">Nenhuma disciplina cadastrada ainda.</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

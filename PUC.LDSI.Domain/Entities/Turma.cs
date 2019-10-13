@@ -6,12 +6,10 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class Turma : Cabecalho
+    public class Turma : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
-        public int Id { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Nome { get; set; }
 
         //Relacionamentos

@@ -6,13 +6,11 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class Disciplina : Cabecalho
+    public class Disciplina : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
-        public int Id { get; set; }
-        [StringLength(150)]
+        [StringLength(150, ErrorMessage = "O campo {0} deve ter no máximo 150 caracteres")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Nome { get; set; }
 
         //Relacionamentos

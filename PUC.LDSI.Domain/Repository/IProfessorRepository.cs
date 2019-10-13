@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Repository
 {
-    public interface IProfessorRepository
+    public interface IProfessorRepository : IRepository<Professor>
     {
-        Task<int> IncluirNovoProfessorAsync(Professor professor);
         Professor ObterPorLogin(string login);
     }
 }

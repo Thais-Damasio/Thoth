@@ -6,16 +6,21 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class Avaliacao : Cabecalho
+    public class Avaliacao : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
-        public int Id { get; set; }
+        [Display(Name = "Matéria")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Materia { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Professor")]
         [ForeignKey("Professor")]
         public int IdProfessor { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Disciplina")]
         [ForeignKey("Disciplina")]
         public int IdDisciplina { get; set; }
 

@@ -40,11 +40,31 @@ namespace PUC.LDSI.ModuloProfessor
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
+            services.AddScoped<IAlunoRepository, AlunoRepository>();
+            services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
+            services.AddScoped<IAvaliacaoQuestaoRepository, AvaliacaoQuestaoRepository>();
+            services.AddScoped<IAvaliacaoOpcaoRepository, AvaliacaoOpcaoRepository>();
+            services.AddScoped<IProvaRepository, ProvaRepository>();
+            services.AddScoped<IProvaQuestaoRepository, ProvaQuestaoRepository>();
+            services.AddScoped<IProvaOpcaoRepository, ProvaOpcaoRepository>();
+            services.AddScoped<ITurmaRepository, TurmaRepository>();
+            services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
+            services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
+
             services.AddScoped<IProfessorService, ProfessorService>();
+            services.AddScoped<IAlunoService, AlunoService>();
+            services.AddScoped<ITurmaService, TurmaService>();
+            services.AddScoped<IDisciplinaService, DisciplinaService>();
+            services.AddScoped<IPublicacaoService, PublicacaoService>();
+            services.AddScoped<IProvaService, ProvaService>();
+            services.AddScoped<IProvaQuestaoService, ProvaQuestaoService>();
+            services.AddScoped<IProvaOpcaoService, ProvaOpcaoService>();
+            services.AddScoped<IAvaliacaoService, AvaliacaoService>();
+            services.AddScoped<IAvaliacaoQuestaoService, AvaliacaoQuestaoService>();
+            services.AddScoped<IAvaliacaoOpcaoService, AvaliacaoOpcaoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +84,7 @@ namespace PUC.LDSI.ModuloProfessor
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

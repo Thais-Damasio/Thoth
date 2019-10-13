@@ -1,0 +1,55 @@
+﻿@model PUC.LDSI.Domain.Entities.Avaliacao
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Avaliacao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Materia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Materia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Professor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Professor.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Disciplina)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Disciplina.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CriadoEm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CriadoEm)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AtualizadoEm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AtualizadoEm)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

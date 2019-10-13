@@ -1,0 +1,40 @@
+﻿@model PUC.LDSI.Domain.Entities.Disciplina
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-card uk-card-default uk-width-1-2@m uk-horizontal-center">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom"> @Html.DisplayFor(model => model.Nome)</h3>
+                    <p class="uk-text-meta uk-margin-remove-top">Disciplina</p>
+                    <p class="uk-text-meta uk-margin-remove-top">Última atualização em @Html.DisplayFor(model => model.AtualizadoEm)</p>
+                </div>
+                <div class="uk-card-body">
+                    <ul class="uk-list uk-list-divider">
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Nome) </span>
+                            @Html.DisplayFor(model => model.Nome)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.AtualizadoEm) </span>
+                            @Html.DisplayFor(model => model.AtualizadoEm)
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer">
+                    <div class="uk-clearfix">
+                        <div class="uk-float-left">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="uk-button uk-button-primary">Editar</a>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

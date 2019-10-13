@@ -6,12 +6,9 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-   public class Publicacao : Cabecalho
+   public class Publicacao : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
-        public int Id { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
         public int Valor { get; set; }

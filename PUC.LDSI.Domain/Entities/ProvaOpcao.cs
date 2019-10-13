@@ -6,15 +6,16 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class ProvaOpcao : Cabecalho
+    public class ProvaOpcao : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
-        public int Id { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Questão")]
         [ForeignKey("ProvaQuestao")]
         public int IdQuestaoProva { get; set; }
-        [ForeignKey("AvaliacaoOpcao")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Disciplina")]
+        [ForeignKey("Opção")]
         public int IdAvaliacaoOpcao { get; set; }
         public bool Resposta { get; set; }
 

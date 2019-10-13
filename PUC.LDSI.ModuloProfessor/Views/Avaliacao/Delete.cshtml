@@ -1,0 +1,58 @@
+﻿@model PUC.LDSI.Domain.Entities.Avaliacao
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Avaliacao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Materia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Materia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Professor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Professor.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Disciplina)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Disciplina.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CriadoEm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CriadoEm)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AtualizadoEm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AtualizadoEm)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

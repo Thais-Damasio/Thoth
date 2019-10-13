@@ -1,0 +1,41 @@
+﻿@model PUC.LDSI.Domain.Entities.Disciplina
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-card uk-card-default uk-width-1-2@m uk-horizontal-center">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom">Editar</h3>
+                    <p class="uk-text-meta uk-margin-remove-top">@Html.DisplayFor(model => model.Nome)</p>
+                </div>
+                <div class="uk-card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
+                        <div class="uk-margin">
+                            <div class="uk-form-controls">
+                                <label asp-for="Nome" class="uk-form-label">Nome</label>
+                                <input asp-for="Nome" class="uk-input" placeholder="Nome da disciplina" />
+                            </div>
+                            <span asp-validation-for="Nome" class="uk-text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="uk-clearfix">
+                            <div class="uk-float-left">
+                                <button class="uk-button uk-button-primary" type="submit">Salvar</button>
+                            </div>
+                            <div class="uk-float-right">
+                                <a asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

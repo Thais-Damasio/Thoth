@@ -37,15 +37,15 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
+            [EmailAddress(ErrorMessage = "Preencha o campo de {0} com um formato válido")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Preencha o campo de  {0}")]
             [DataType(DataType.Password)]
-            public string Password { get; set; }
+            public string Senha { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Manter conectado?")]
             public bool RememberMe { get; set; }
         }
 
@@ -68,13 +68,13 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/Dashboard");
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Senha, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -91,7 +91,7 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Usuário e/ou senha incorretas.");
                     return Page();
                 }
             }
