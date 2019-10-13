@@ -2,14 +2,17 @@
 using PUC.LDSI.Domain.Repository;
 using System;
 using System.Threading.Tasks;
+using PUC.LDSI.DataBase.Context;
 
 namespace PUC.LDSI.DataBase.Repository
 {
-    public class AvaliacaoQuestaoRepository : IAvaliacaoQuestaoRepository
+    public class AvaliacaoQuestaoRepository : Repository<AvaliacaoQuestao>, IAvaliacaoQuestaoRepository
     {
-        public Task<int> IncluirNovoQuestaoAvaliacaoAsync(AvaliacaoQuestao avQuestao)
+        private readonly AppDbContext _context;
+        public AvaliacaoQuestaoRepository(AppDbContext context) : base(context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
     }
 }
+

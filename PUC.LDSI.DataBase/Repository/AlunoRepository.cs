@@ -2,14 +2,16 @@
 using PUC.LDSI.Domain.Repository;
 using System;
 using System.Threading.Tasks;
+using PUC.LDSI.DataBase.Context;
 
 namespace PUC.LDSI.DataBase.Repository
 {
-    public class AlunoRepository : IAlunoRepository
+    public class AlunoRepository : Repository<Aluno>, IAlunoRepository
     {
-        public Task<int> IncluirNovoAlunoAsync(Aluno aluno)
+        private readonly AppDbContext _context;
+        public AlunoRepository(AppDbContext context) : base(context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
         public Aluno ObterPorLogin(string login)
@@ -18,3 +20,4 @@ namespace PUC.LDSI.DataBase.Repository
         }
     }
 }
+

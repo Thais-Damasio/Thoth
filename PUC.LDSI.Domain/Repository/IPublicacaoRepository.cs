@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Repository
 {
-    public interface IPublicacaoRepository
+    public interface IPublicacaoRepository : IRepository<Publicacao>
     {
     }
 }

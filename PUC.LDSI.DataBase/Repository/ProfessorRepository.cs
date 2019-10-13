@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.DataBase.Repository
 {
-    public class ProfessorRepository : IProfessorRepository
+    public class ProfessorRepository : Repository<Professor>, IProfessorRepository
     {
         private readonly AppDbContext _context;
-        public ProfessorRepository(AppDbContext context)
+        public ProfessorRepository(AppDbContext context) : base(context)
         {
             _context = context;
-        }
-        public async Task<int> IncluirNovoProfessorAsync(Professor professor)
-        {
-            _context.Add(professor);
-            var retorno = await _context.SaveChangesAsync();
-            return retorno;
         }
         public Professor ObterPorLogin(string login)
         {

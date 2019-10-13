@@ -6,12 +6,9 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class ProvaQuestao : Cabecalho
+    public class ProvaQuestao : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //Atributos
-        public int Id { get; set; }
         [ForeignKey("AvaliacaoQuestao")]
         public int IdAvaliacaoQuestao { get; set; }
         [ForeignKey("Prova")]

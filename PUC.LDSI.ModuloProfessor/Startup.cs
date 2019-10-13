@@ -46,7 +46,7 @@ namespace PUC.LDSI.ModuloProfessor
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
             services.AddScoped<IAvaliacaoQuestaoRepository, AvaliacaoQuestaoRepository>();
-            services.AddScoped<IAvalicaoOpcaoRepository, AvaliacaoOpcaoRepository>();
+            services.AddScoped<IAvaliacaoOpcaoRepository, AvaliacaoOpcaoRepository>();
             services.AddScoped<IProvaRepository, ProvaRepository>();
             services.AddScoped<IProvaQuestaoRepository, ProvaQuestaoRepository>();
             services.AddScoped<IProvaOpcaoRepository, ProvaOpcaoRepository>();
@@ -84,7 +84,7 @@ namespace PUC.LDSI.ModuloProfessor
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

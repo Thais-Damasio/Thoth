@@ -1,0 +1,83 @@
+﻿@model IEnumerable<PUC.LDSI.Domain.Entities.Avaliacao>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-margin-large"></div>
+            <div class="uk-overflow-auto uk-margin-right uk-margin-left">
+                <table class="uk-table uk-width-1-2 uk-table-hover uk-table-small uk-table-divider uk-background-muted uk-horizontal-center">
+                    <caption>
+                        <div class="uk-margin">
+                            <a asp-controller="Avaliacao" asp-action="Create" class="uk-button uk-button-primary">Criar Avaliação</a>
+                        </div>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="uk-table-shrink"></th>
+                            <th class="uk-table-shrink">
+                                @Html.DisplayNameFor(model => model.Materia)
+                            </th>
+                            <th class="uk-width-small">
+                                @Html.DisplayNameFor(model => model.Descricao)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Professor)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Disciplina)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.AtualizadoEm)
+                            </th>
+                            <th class="uk-table-shrink"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><input class="uk-checkbox" type="checkbox"></td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Materia)
+                                    </td>
+                                    <td class="uk-text-truncate">
+                                        @Html.DisplayFor(modelItem => item.Descricao)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Professor.Id)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Disciplina.Id)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.AtualizadoEm)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="uk-text-center" colspan="7">
+                                    <img class="uk-display-block uk-align-center" width="60" src="~/images/empty.png" />
+                                    <span class="uk-text-muted">Nenhuma avaliação cadastrada ainda.</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

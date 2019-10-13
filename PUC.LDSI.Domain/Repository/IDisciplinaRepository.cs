@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Repository
 {
-    public interface IDisciplinaRepository
+    public interface IDisciplinaRepository : IRepository<Disciplina>
     {
-        Task<int> IncluirNovaDisciplinaoAsync(Disciplina avaliacao);
+        Task<Disciplina> ObterComAvaliacaoAsync(int id);
     }
 }

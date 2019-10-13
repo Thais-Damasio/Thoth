@@ -44,25 +44,28 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
             [DataType(DataType.Text)]
             [Display(Name = "Nome")]
             public string Nome { get; set; }
 
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
+            [Display(Name = "Tipo do Usuário")]
+            public int Tipo { get; set; }
+
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} deve possuir no mínimo {2} e máximo {1} caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
+            [Display(Name = "Senha")]
+            public string Senha { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmação de Senha")]
+            [Compare("Senha", ErrorMessage = "A senha de confirmação não corresponde a digitada")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -76,8 +79,8 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Usuario { UserName = Input.Email, Email = Input.Email, Tipo = 1, Nome = Input.Nome };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var user = new Usuario { UserName = Input.Email, Email = Input.Email, Tipo = Input.Tipo, Nome = Input.Nome };
+                var result = await _userManager.CreateAsync(user, Input.Senha);
                 if (result.Succeeded)
                 {
                     await _professorService.IncluirNovoProfessorAsync(user.UserName, user.Nome);
@@ -91,8 +94,8 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirme seu E-mail",
+                        $"Por favor confirme se cadastro <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Repository
 {
-    public interface IAvalicaoOpcaoRepository
+    public interface IAvaliacaoOpcaoRepository : IRepository<AvaliacaoOpcao>
     {
-        Task<int> IncluirNovaAvaliacaoOpcaoAsync(AvaliacaoOpcao avaliacao);
     }
 }
