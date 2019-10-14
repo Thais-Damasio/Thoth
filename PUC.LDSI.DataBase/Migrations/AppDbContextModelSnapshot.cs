@@ -156,17 +156,14 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<DateTime>("CriadoEm");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(150);
 
                     b.Property<int>("Matricula");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasMaxLength(150);
 
-                    b.Property<string>("Senha")
-                        .IsRequired();
+                    b.Property<string>("Senha");
 
                     b.HasKey("Id");
 

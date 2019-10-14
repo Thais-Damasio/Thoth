@@ -10,7 +10,7 @@ using PUC.LDSI.DataBase.Context;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191014021734_AppMigration2")]
+    [Migration("20191014025918_AppMigration2")]
     partial class AppMigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,17 +158,14 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<DateTime>("CriadoEm");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(150);
 
                     b.Property<int>("Matricula");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasMaxLength(150);
 
-                    b.Property<string>("Senha")
-                        .IsRequired();
+                    b.Property<string>("Senha");
 
                     b.HasKey("Id");
 
