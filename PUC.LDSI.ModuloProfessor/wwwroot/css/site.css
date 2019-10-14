@@ -13,7 +13,10 @@
     background: #010031;
     color: white !important;
 }
-.uk-table-hover tbody tr:hover span {
+input[type="checkbox"][readonly] {
+    pointer-events: none;
+}
+.uk-table-hover tbody tr:hover .no-input {
     color: white !important;
 }
 .uk-text-white {
@@ -26,6 +29,14 @@ a.uk-hover-danger:hover {
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
+}
+.no-input {
+    border: none;
+    display: inline;
+    font-family: inherit;
+    font-size: inherit;
+    width: auto;
+    background: transparent;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */

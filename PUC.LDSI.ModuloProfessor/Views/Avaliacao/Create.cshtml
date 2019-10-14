@@ -1,9 +1,11 @@
-﻿@using PUC.LDSI.Domain.Entities
+﻿@using Microsoft.AspNetCore.Identity
+@using PUC.LDSI.Domain.Entities
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
 @model Avaliacao
 
 @{
     ViewData["Title"] = "Avaliação";
-    List<AvaliacaoQuestao> Questoes = new List<AvaliacaoQuestao>();
 }
 
 <div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
@@ -14,197 +16,305 @@
                 <hr />
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <fieldset class="uk-fieldset">
 
-                        <div class="uk-margin">
-                            <div class="uk-form-controls">
-                                <label asp-for="IdDisciplina" class="uk-form-label">Disciplina</label>
-                                <select asp-for="IdDisciplina" class="uk-select" asp-items="ViewBag.IdDisciplina"></select>
-                            </div>
+                    @*Disciplina*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="IdDisciplina" class="uk-form-label">Disciplina</label>
+                            <select asp-for="IdDisciplina" class="uk-select" asp-items="ViewBag.IdDisciplina"></select>
                         </div>
+                    </div>
 
-                        <div class="uk-margin">
-                            <div class="uk-form-controls">
-                                <label asp-for="Materia" class="uk-form-label">Matéria</label>
-                                <input asp-for="Materia" class="uk-input" type="text" placeholder="Informe a matéria da prova">
-                            </div>
-                            <span asp-validation-for="Materia" class="uk-text-danger"></span>
+                    @*Professor vinculado*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="IdProfessor" class="uk-form-label"></label>
+                            <select asp-for="IdProfessor" class="uk-select" asp-items="ViewBag.IdProfessor"></select>
                         </div>
+                    </div>
 
-                        <div class="uk-margin">
-                            <div class="uk-form-controls">
-                                <label asp-for="Descricao" class="uk-form-label" for="form-stacked-text">Descrição</label>
-                                <textarea asp-for="Descricao" class="uk-textarea" rows="5" placeholder="Informe a descrição da prova"></textarea>
-                            </div>
-                            <span asp-validation-for="Descricao" class="uk-text-danger"></span>
+                    @*Matéria*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="Materia" class="uk-form-label">Matéria</label>
+                            <input asp-for="Materia" class="uk-input" type="text" placeholder="Informe a matéria da prova">
                         </div>
+                        <span asp-validation-for="Materia" class="uk-text-danger"></span>
+                    </div>
 
-                        <hr />
+                    @*Descrição*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="Descricao" class="uk-form-label" for="form-stacked-text">Descrição</label>
+                            <textarea asp-for="Descricao" class="uk-textarea" rows="5" placeholder="Informe a descrição da prova"></textarea>
+                        </div>
+                        <span asp-validation-for="Descricao" class="uk-text-danger"></span>
+                    </div>
 
-                        <h3 class="uk-legend titulo-questoes">Questões</h3>
+                    <hr />
 
-                        <div class="div-questoes">
-                            <fieldset class="uk-fieldset">
+                    <h3 class="uk-legend uk-margin-remove-bottom">Questões</h3>
+                    <small>1 - Múltipla Escolha &emsp; 2 - Verdadeiro ou Falso</small>
 
-                                <table id="q-table" class="uk-table uk-table-hover uk-table-divider tabela-questoes">
-                                    <tbody>
-                                        <tr>
-                                            <td class="uk-table-expand uk-table-link">
-                                                <a class="uk-link-reset">Questão 1</a>
-                                            </td>
-                                            <td>
-                                                <a uk-tooltip="Remover" onclick="removeRow(this)" class="uk-hover-danger" uk-icon="icon: trash"></a>
-                                            </td>
-                                        </tr>
-                                        <tr style="background-color: #b8ffa8; color: black; border-top: 2px solid black;">
-                                            <td class="uk-table-link" colspan="2">
-                                                <a onclick="novaQuestao()" class="uk-link-reset">
-                                                    <b>
-                                                        <span uk-icon="plus" style="font-size: 30px"></span> Nova questão
-                                                    </b>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <div class="uk-margin-bottom">
+                        @*Tabela de Questões*@
+                        <table id="q-table" class="uk-table uk-table-striped uk-table-hover">
+                            <tbody>
+                                @*Questões adicionadas*@
+                            </tbody>
+                        </table>
+                        <span>
+                            <a onclick="novaQuestao()" class="uk-icon-button" uk-icon="icon: plus"></a>
+                            <a onclick="novaQuestao()">Adicionar Questão</a>
+                        </span>
 
-                                <div id="novaQuestao" style="display: none">
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label" for="form-stacked-text">Tipo</label>
-                                        <select id="q-tipo" class="uk-select">
-                                            <option value="1">Múltipla escolha</option>
-                                            <option value="2">Aberta</option>
-                                        </select>
+                        @*Nova questão*@
+                        <div id="novaQuestao" class="uk-padding-small uk-margin-small-top uk-background-muted" style="display: none">
+                            @*Tipo*@
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="form-stacked-text">Tipo</label>
+                                <select id="q-tipo" class="uk-select">
+                                    <option value="1">Múltipla escolha</option>
+                                    <option value="2">Verdadeiro ou Falso</option>
+                                </select>
+                            </div>
+
+                            @*Enunciado*@
+                            <div class="uk-margin">
+                                <div class="uk-form-controls">
+                                    <label class="uk-form-label" for="form-stacked-text">Enunciado</label>
+                                    <textarea id="q-enunciado" class="uk-textarea" rows="5" placeholder="Informe o enunciado da questão"></textarea>
+                                </div>
+                            </div>
+
+                            <label class="uk-form-label" for="form-stacked-text">Opções</label>
+                            <table id="o-table" class="uk-table">
+                                <tbody></tbody>
+                            </table>
+                            <span>
+                                <a onclick="novaOpcao()" class="uk-icon-button" uk-icon="icon: plus"></a>
+                                <a onclick="novaOpcao()">Adicionar Opção</a>
+                            </span>
+
+                            @*Adicionar nova opção*@
+                            <div class="uk-padding-small uk-background-default" id="novaOpcao" style="display: none">
+                                @*Resposta*@
+                                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                    <label><input id="o-resposta" class="uk-checkbox" type="checkbox"> Verdadeira</label>
+                                </div>
+
+                                @*Descrição*@
+                                <div class="uk-margin">
+                                    <div class="uk-form-controls">
+                                        <label class="uk-form-label" for="form-stacked-text">Descrição</label>
+                                        <input id="o-descricao" class="uk-input" rows="5" placeholder="Informe a descrição da opção" />
                                     </div>
+                                </div>
 
-                                    <div class="uk-margin">
-                                        <div class="uk-form-controls">
-                                            <label class="uk-form-label" for="form-stacked-text">Enunciado</label>
-                                            <textarea id="q-enunciado" class="uk-textarea" rows="5" placeholder="Informe o enunciado da questão"></textarea>
-                                        </div>
-                                    </div>
-
+                                @*Salvar ou remover opção*@
+                                <div class="uk-margin">
                                     <div class="uk-clearfix">
                                         <div class="uk-float-left">
-                                            <button onclick="salvarQuestao()" class="uk-button uk-button-primary">Salvar</button>
+                                            <button onclick="salvarOpcao()" class="uk-button uk-button-secondary">Adicionar Opção</button>
                                         </div>
                                         <div class="uk-float-right">
-                                            <a onclick="cancelarNovaQuestao()" class="uk-button uk-button-default">Cancelar</a>
+                                            <a onclick="cancelarNovaOpcao()" class="uk-button uk-button-default">Cancelar</a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                @functions {
-                                    protected string addNovaQuestao()
-                                    {
-                                        return "oi";
-                                    }
-                                }
-
-                                <hr />
-
-                                <h3 class="uk-legend titulo-questoes">Opções</h3>
-                                <div class="uk-margin">
-                                    <div class="uk-form-controls uk-form-controls-text">
-                                        <label>
-                                            <input class="uk-radio" type="radio" name="radio1" checked> Opção 01
-                                            <a>(X)</a>
-                                        </label><br>
-                                        <label>
-                                            <input class="uk-radio" type="radio" name="radio1"> Opção 02
-                                            <a>(X)</a>
-                                        </label><br>
-                                        <label>
-                                            <input class="uk-radio" type="radio" name="radio1"> Opção 03
-                                            <a>(X)</a>
-                                        </label><br>
-                                        <label>
-                                            <input class="uk-radio" type="radio" name="radio1"> Opção 04
-                                            <a>(X)</a>
-                                        </label><br>
+                            @*Salvar ou remover questão*@
+                            <div class="uk-margin">
+                                <div class="uk-clearfix">
+                                    <div class="uk-float-left">
+                                        <button onclick="salvarQuestao()" class="uk-button uk-button-secondary">Adicionar Questão</button>
                                     </div>
-                                    <br>
-                                    <a>+ Adicionar opções</a>
-                                    <button class="uk-button uk-button-default bgreen uk-align-right" style="color: black"
-                                            type="button">
-                                        Salvar
-                                    </button>
-
+                                    <div class="uk-float-right">
+                                        <a onclick="cancelarNovaQuestao()" class="uk-button uk-button-default">Cancelar</a>
+                                    </div>
                                 </div>
+                            </div>
 
-                            </fieldset>
                         </div>
-                    </fieldset>
+                    </div>
+
+                    <hr />
+
+                    @*Submit do form*@
+                    <div class="uk-clearfix">
+                        <div class="uk-float-left">
+                            <button class="uk-button uk-button-primary" type="submit">Salvar</button>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                        </div>
+                    </div>
                 </form>
-                <a class="uk-link-muted uk-align-right" asp-action="Index">Voltar Para a Lista</a>
             </div>
         </div>
     </div>
 </div>
-
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="IdProfessor" class="control-label"></label>
-        <select asp-for="IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="CriadoEm" class="control-label"></label>
-        <input asp-for="CriadoEm" class="form-control" />
-        <span asp-validation-for="CriadoEm" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="AtualizadoEm" class="control-label"></label>
-        <input asp-for="AtualizadoEm" class="form-control" />
-        <span asp-validation-for="AtualizadoEm" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-default" />
-    </div>
-</form>
 <script>
+    var indexQ = 0;
+
+    //Função de permitir add nova questão
     function novaQuestao() {
         event.preventDefault();
         document.getElementById("novaQuestao").style.display = "block";
     }
+    //Função de permitir add nova opção
+    function novaOpcao() {
+        event.preventDefault();
+        document.getElementById("novaOpcao").style.display = "block";
+    }
+    //Função de fechar inserção de nova questão
     function cancelarNovaQuestao() {
         event.preventDefault();
         document.getElementById("novaQuestao").style.display = "none";
     }
+    //Função de fechar inserção de nova opção
+    function cancelarNovaOpcao() {
+        event.preventDefault();
+        document.getElementById("novaOpcao").style.display = "none";
+    }
+    //Função para salvar uma questão inserida
     function salvarQuestao() {
         event.preventDefault();
         let av = new AvaliacaoQuestao();
-        av.Enunciado = $("#q-enunciado");
-        av.Tipo = $("#q-tipo");
-        if (av.Enunciado == "") {
+        av.Enunciado = $("#q-enunciado").val();
+        av.Tipo = $("#q-tipo").val();
+        console.log(av.Enunciado)
+        if (av.Enunciado != '') {
             let table = document.getElementById("q-table");
             let row = table.insertRow(-1);
-            let inputCell = row.insertCell(0);
+            let qCell = row.insertCell(0);
             let removeCell = row.insertCell(1);
 
-            let iconTrash = document.createElement("i");
-            iconTrash.classList.add("i-remove", "fa", "fa-trash-alt");
-            let input = document.createElement("input");
-            input.classList.add("input-t");
-            input.value = av.Enunciado;
-            input.type = "text";
-            input.name = "questa[]";
-            input.readOnly = true;
-            iconTrash.addEventListener("click", function () { removeRow(iconTrash) })
+            let inputType = document.createElement("input");
+            inputType.classList.add("no-input");
+            inputType.value = av.Tipo;
+            inputType.type = "text";
+            inputType.name = "Questoes[" + indexQ + "].Tipo";
+            inputType.hidden = true;
+
+            let inputEnun = document.createElement("input");
+            inputEnun.classList.add("no-input");
+            inputEnun.value = av.Enunciado;
+            inputEnun.type = "text";
+            inputEnun.name = "Questoes[" + indexQ + "].Enunciado";
+            inputEnun.readOnly = true;
+
+            let iconTrash = document.createElement("a");
+            iconTrash.classList.add("uk-hover-danger");
+            iconTrash.setAttribute("uk-icon", "icon: trash");
+            iconTrash.setAttribute("uk-tooltip", "Remover");
+
+            iconTrash.addEventListener("click", function () {
+                removeRowQ(this)
+            });
+            qCell.appendChild(inputType);
+            qCell.appendChild(inputEnun);
             removeCell.appendChild(iconTrash);
-            inputCell.appendChild(input);
 
             $("#q-enunciado").val('');
+            document.getElementById("novaQuestao").style.display = "none";
+            let tOp = document.getElementById("o-table");
+            let tOpRow = tOp.getElementsByTagName("tr");
+            if (tOpRow.length > 0) {
+                for (let i = 0; i < tOpRow.length; i++) {
+                    let div = document.createElement("div");
+                    tOpRow[i].children[0].childNodes[0].setAttribute("name", "Questoes[" + indexQ + "].Opcoes[" + i + "].Resposta")
+                    div.appendChild(tOpRow[i].children[0]);
+                    tOpRow[i].children[0].childNodes[0].setAttribute("name", "Questoes[" + indexQ + "].Opcoes[" + i + "].Descricao")
+                    div.appendChild(tOpRow[i].children[0]);
+                    qCell.appendChild(div);
+                }
+                tOp.innerHTML = "";
+            }
+            indexQ++;
         }
     }
-    function removeRow(el) {
+    //Função para salvar uma opção em uma questão
+    function salvarOpcao() {
         event.preventDefault();
-        let row = $(el).closest("tr");
+        let op = new AvaliacaoOpcao();
+        op.Resposta = $("#o-resposta").is(":checked");
+        op.Descricao = $("#o-descricao").val();
+        if (op.Descricao != '') {
+            let table = document.getElementById("o-table");
+            let row = table.insertRow(-1);
+            let resCell = row.insertCell(0);
+            let descCell = row.insertCell(1);
+            let removeCell = row.insertCell(2);
+
+            let inputRes = document.createElement("input");
+            inputRes.checked = op.Resposta;
+            inputRes.classList.add("uk-checkbox");
+            inputRes.type = "checkbox";
+            inputRes.readOnly = true;
+            if (op.Resposta == true)
+                inputRes.value = true;
+            else
+                inputRes.value = false;
+
+            let iconTrash = document.createElement("a");
+            iconTrash.classList.add("uk-hover-danger");
+            iconTrash.setAttribute("uk-icon", "icon: trash");
+            iconTrash.setAttribute("uk-tooltip", "Remover");
+
+            let inputDesc = document.createElement("input");
+            inputDesc.classList.add("no-input");
+            inputDesc.value = op.Descricao;
+            inputDesc.type = "text";
+            inputDesc.readOnly = true;
+
+            iconTrash.addEventListener("click", function () { removeRowO(this) });
+            resCell.appendChild(inputRes);
+            removeCell.appendChild(iconTrash);
+            descCell.appendChild(inputDesc);
+
+            $("#o-descricao").val('');
+        }
+    }
+    //Função para remover uma questão inserida
+    function removeRowQ(el) {
+        var tdEl = el.parentNode;
+        var trEl = el.parentNode.parentNode;
+
+        var trElParent = Array.prototype.slice.call(trEl.parentNode.children);
+        var trElIndex = trElParent.indexOf(trEl);
+        console.log(trElIndex)
+
+        indexQ--;
+        let row = $(tdEl).closest("tr");
         row.remove();
     }
+    //Função para remover uma opção inserida
+    function removeRowO(el) {
+        var tdEl = el.parentNode;
+        var trEl = el.parentNode.parentNode;
 
+        var trElParent = Array.prototype.slice.call(trEl.parentNode.children);
+        var trElIndex = trElParent.indexOf(trEl);
+        console.log(trElIndex)
+
+        let row = $(tdEl).closest("tr");
+        row.remove();
+    }
+    //Adicionar value ao check
+    function Check() {
+
+    }
+    //Definição de uma questão
     class AvaliacaoQuestao {
         Tipo
         Enunciado
+    }
+    //Definição de uma opção
+    class AvaliacaoOpcao {
+        Resposta
+        Descricao
     }
 </script>
 

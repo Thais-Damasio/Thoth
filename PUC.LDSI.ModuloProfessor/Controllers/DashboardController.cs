@@ -27,7 +27,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         // GET: Dashboard
         public async Task<IActionResult> Index()
         {
-            return View(await _avaliacaoRepository.ListarTodosAsync());
+            return View(await _avaliacaoRepository.ListarComRelacoesAsync());
         }
     }
 }
