@@ -1,58 +1,49 @@
 ﻿@model PUC.LDSI.Domain.Entities.Avaliacao
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Apagar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Avaliacao</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Materia)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Materia)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Professor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Professor.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Disciplina)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Disciplina.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CriadoEm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CriadoEm)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AtualizadoEm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AtualizadoEm)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-card uk-card-default uk-width-1-2@m uk-horizontal-center">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom"> Apagar Avaliação</h3>
+                    <p class="uk-text-danger"> Você tem certeza que deseja apagar esta avaliação?</p>
+                </div>
+                <div class="uk-card-body">
+                    <ul class="uk-list uk-list-divider">
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Materia) </span>
+                            @Html.DisplayFor(model => model.Materia)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.IdDisciplina) </span>
+                            @Html.DisplayFor(model => model.Disciplina.Nome)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.AtualizadoEm) </span>
+                            @Html.DisplayFor(model => model.AtualizadoEm)
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer">
+                    <div class="uk-clearfix">
+                        <div class="uk-float-left">
+                            <form asp-controller="Avaliacao" asp-action="Delete">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="submit" value="Deletar" class="uk-button uk-button-danger" />
+                                <a asp-controller="Avaliacao" asp-action="Details" asp-route-id="@Model.Id" class="uk-button uk-button-default">Detalhes</a>
+                            </form>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-controller="Dashboard" asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

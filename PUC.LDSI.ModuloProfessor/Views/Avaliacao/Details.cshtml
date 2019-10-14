@@ -1,55 +1,81 @@
 ﻿@model PUC.LDSI.Domain.Entities.Avaliacao
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Avaliacao</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Materia)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Materia)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Professor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Professor.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Disciplina)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Disciplina.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CriadoEm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CriadoEm)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AtualizadoEm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AtualizadoEm)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-card uk-card-default uk-width-1-2@m uk-horizontal-center">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom"> Detalhes da Avaliação</h3>
+                    <p class="uk-text-meta uk-margin-remove-top">Última atualização em @Html.DisplayFor(model => model.AtualizadoEm)</p>
+                </div>
+                <div class="uk-card-body">
+                    <ul class="uk-list uk-list-divider">
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.IdDisciplina) </span>
+                            @Html.DisplayFor(model => model.Disciplina.Nome)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.Materia) </span>
+                            @Html.DisplayFor(model => model.Materia)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.Descricao) </span>
+                            @Html.DisplayFor(model => model.Descricao)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.IdProfessor) </span>
+                            @Html.DisplayFor(model => model.Professor.Nome)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold  uk-display-block">@Html.DisplayNameFor(model => model.Questoes) </span>
+                            @{int i = 1;}
+                            @if (Model.Questoes.Count > 0)
+                            {
+                                @foreach (var questao in Model.Questoes)
+                                {
+                                    <span class="uk-display-block">
+                                        <span class="uk-text-bold">@i.&nbsp;</span>@questao.Enunciado
+                                    </span>
+                                    @foreach (var opcao in questao.Opcoes)
+                                    {
+                                        @if (questao.Tipo == 1)
+                                        {
+                                            <span class="uk-display-block">
+                                                <span class="uk-text-bold">()&nbsp;</span>@opcao.Descricao
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="uk-display-block">
+                                                <span class="uk-text-bold">()&nbsp;</span>@opcao.Descricao
+                                            </span>
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                <span>Nenhuma questão cadastrada</span>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer">
+                    <div class="uk-clearfix">
+                        <div class="uk-float-left">
+                            <a asp-controller="Avaliacao" asp-action="Edit" asp-route-id="@Model.Id" class="uk-button uk-button-primary">Editar</a>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-controller="Dashboard" asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

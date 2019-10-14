@@ -33,6 +33,16 @@ namespace PUC.LDSI.DataBase.Repository
            .Where(x => x.Id == id).FirstOrDefaultAsync();
             return avaliacao;
         }
+
+        public async Task<Avaliacao> ObterComRelacoesAsync(int id)
+        {
+            var avaliacao = await _context.Avaliacoes
+           .Include(x => x.Professor)
+           .Include(x => x.Questoes).ThenInclude(x => x.Opcoes)
+           .Include(d => d.Disciplina)
+           .Where(x => x.Id == id).FirstOrDefaultAsync();
+            return avaliacao;
+        }
     }
 }
 

@@ -32,6 +32,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
             _context = context;
             _avaliacaoService = avaliacaoService;
             _avaliacaoOpcaoService = avaliacaoOpcaoService;
+            _avaliacaoQuestaoService = avaliacaoQuestaoService;
             _avaliacaoRepository = avaliacaoRepository;
         }
 
@@ -57,10 +58,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 return NotFound();
             }
 
-            var avaliacao = await _context.Avaliacoes
-                .Include(a => a.Disciplina)
-                .Include(a => a.Professor)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var avaliacao = await _avaliacaoRepository.ObterComRelacoesAsync(id.Value);
             if (avaliacao == null)
             {
                 return NotFound();
@@ -104,13 +102,13 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 return NotFound();
             }
 
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            var avaliacao = await _avaliacaoRepository.ObterComRelacoesAsync(id.Value);
             if (avaliacao == null)
             {
                 return NotFound();
             }
-            ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Id", avaliacao.IdDisciplina);
-            ViewData["IdProfessor"] = new SelectList(_context.Professores, "Id", "Id", avaliacao.IdProfessor);
+            ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Nome", avaliacao.IdDisciplina);
+            ViewData["IdProfessor"] = new SelectList(_context.Professores, "Id", "Email", avaliacao.IdProfessor);
             return View(avaliacao);
         }
 

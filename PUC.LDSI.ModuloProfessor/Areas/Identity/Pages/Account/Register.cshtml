@@ -26,14 +26,6 @@
                         </div>
 
                         <div class="uk-margin">
-                            <select asp-for="Input.Tipo" class="uk-select">
-                                <option value="2">Aluno</option>
-                                <option value="1">Professor</option>
-                            </select>
-                            <span asp-validation-for="Input.Tipo" class="uk-text-danger"></span>
-                        </div>
-
-                        <div class="uk-margin">
                             <div class="uk-inline uk-width-1-1">
                                 <span asp-for="Input.Email" class="uk-form-icon" uk-icon="icon: mail"></span>
                                 <input asp-for="Input.Email" class="uk-input" type="text" placeholder="Usuário" uk-tooltip="title: E-mail de acesso; pos: left">
