@@ -14,11 +14,11 @@ namespace PUC.LDSI.Domain.Services
             _avaliacaoOpcaoRepository = avaliacaoOpcaoRepository;
         }
 
-        public async Task<int> AdicionarAvaliacaoOpcaoAsync(string descricao, bool resposta, int id_avaliacao_opcao)
+        public async Task<int> AdicionarAvaliacaoOpcaoAsync(string descricao, bool resposta, int id_avaliacao_questao)
         {
             var avaliacaoOpcao = new AvaliacaoOpcao()
             {
-                IdAvaliacaoQuestao = id_avaliacao_opcao,
+                IdAvaliacaoQuestao = id_avaliacao_questao,
                 Descricao = descricao,
                 Resposta = resposta,
                 CriadoEm = DateTime.Now,
