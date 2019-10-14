@@ -16,13 +16,22 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
     public class AvaliacaoController : BaseController
     {
         private readonly IAvaliacaoService _avaliacaoService;
+        private readonly IAvaliacaoQuestaoService _avaliacaoQuestaoService;
+        private readonly IAvaliacaoOpcaoService _avaliacaoOpcaoService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
         private AppDbContext _context;
 
-        public AvaliacaoController(AppDbContext context, IAvaliacaoService avaliacaoService, IAvaliacaoRepository avaliacaoRepository, UserManager<Usuario> _user) : base(_user)
+        public AvaliacaoController(
+            AppDbContext context,
+            IAvaliacaoService avaliacaoService,
+            IAvaliacaoQuestaoService avaliacaoQuestaoService,
+            IAvaliacaoOpcaoService avaliacaoOpcaoService,
+            IAvaliacaoRepository avaliacaoRepository,
+            UserManager<Usuario> _user) : base(_user)
         {
             _context = context;
             _avaliacaoService = avaliacaoService;
+            _avaliacaoOpcaoService = avaliacaoOpcaoService;
             _avaliacaoRepository = avaliacaoRepository;
         }
 
@@ -37,8 +46,6 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         {
             ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Nome");
             ViewData["IdProfessor"] = new SelectList(_context.Professores, "Id", "Email");
-            ViewData["Questoes"] = new List<AvaliacaoQuestao>();
-            ViewData["OpcaoQuestao"] = new List<AvaliacaoOpcao>();
             return View();
         }
 
@@ -67,11 +74,21 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Materia,Descricao,IdProfessor,IdDisciplina,Id")] Avaliacao avaliacao)
+        public async Task<IActionResult> Create([Bind("Materia,Descricao,IdProfessor,IdDisciplina,Id,Questoes")] Avaliacao avaliacao)
         {
             if (ModelState.IsValid)
             {
-                await _avaliacaoService.AdicionarAvaliacaoAsync(avaliacao.Materia, avaliacao.Descricao, avaliacao.IdProfessor, avaliacao.IdDisciplina);
+                int id_avaliacao = await _avaliacaoService.AdicionarAvaliacaoAsync(avaliacao.Materia, avaliacao.Descricao, avaliacao.IdProfessor, avaliacao.IdDisciplina);
+                if (avaliacao.Questoes.Count > 0)
+                    foreach (var questao in avaliacao.Questoes)
+                    {
+                        int id_opcao = await _avaliacaoQuestaoService.AdicionarAvaliacaoQuestaoAsync(questao.Enunciado, questao.Tipo, id_avaliacao);
+                        if (questao.Opcoes.Count > 0)
+                            foreach (var opcao in questao.Opcoes)
+                            {
+                                await _avaliacaoOpcaoService.AdicionarAvaliacaoOpcaoAsync(opcao.Descricao, opcao.Resposta, id_opcao);
+                            }
+                    }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Nome", avaliacao.IdDisciplina);

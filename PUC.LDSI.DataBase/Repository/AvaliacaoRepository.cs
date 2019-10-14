@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using PUC.LDSI.DataBase.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace PUC.LDSI.DataBase.Repository
 {
@@ -15,6 +16,16 @@ namespace PUC.LDSI.DataBase.Repository
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<Avaliacao>> ListarComRelacoesAsync()
+        {
+            var avaliacoes = await _context.Avaliacoes
+           .Include(x => x.Professor)
+           .Include(d => d.Disciplina)
+           .ToListAsync();
+            return avaliacoes;
+        }
+
         public async Task<Avaliacao> ObterComPublicacaoAsync(int id)
         {
             var avaliacao = await _context.Avaliacoes
