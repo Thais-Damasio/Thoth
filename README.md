@@ -20,6 +20,7 @@ desenvolvido por meio de uma equipe estruturada em funções bem definidas e coo
 definido.*
 Desta forma colocamos em prática conceitos adquiridos ao longo da formação da disciplina a respeito de Projeto de Sistemas de Informação.
 ***
+
 Equipe
 ------
 * [Felipe Santos](https://github.com/felipeheike) (FrontEnd)
