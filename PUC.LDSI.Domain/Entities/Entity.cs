@@ -17,5 +17,11 @@ namespace PUC.LDSI.Domain.Entities
         public DateTime CriadoEm { get; set; }
         [Display(Name = "Última Atualização")]
         public DateTime AtualizadoEm { get; set; }
+
+        public Entity()
+        {
+            CriadoEm = DateTime.Now;
+            AtualizadoEm = DateTime.Now;
+        }
     }
 }

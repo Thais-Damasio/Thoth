@@ -8,6 +8,11 @@ namespace PUC.LDSI.Domain.Entities
 {
    public class Publicacao : Entity
     {
+       
+        public Publicacao() : base()
+        {
+
+        }
         //Atributos
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }

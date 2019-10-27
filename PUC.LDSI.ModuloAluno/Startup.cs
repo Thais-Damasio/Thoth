@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +42,9 @@ namespace PUC.LDSI.ModuloAluno
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+         
+            #region Repository
+
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
@@ -59,6 +57,10 @@ namespace PUC.LDSI.ModuloAluno
             services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
             services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 
+            #endregion
+            
+            #region Service
+
             services.AddScoped<IProfessorService, ProfessorService>();
             services.AddScoped<IAlunoService, AlunoService>();
             services.AddScoped<ITurmaService, TurmaService>();
@@ -70,6 +72,10 @@ namespace PUC.LDSI.ModuloAluno
             services.AddScoped<IAvaliacaoService, AvaliacaoService>();
             services.AddScoped<IAvaliacaoQuestaoService, AvaliacaoQuestaoService>();
             services.AddScoped<IAvaliacaoOpcaoService, AvaliacaoOpcaoService>();
+            
+            #endregion
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,6 +8,8 @@ namespace PUC.LDSI.Domain.Entities
 {
     public class Prova : Entity
     {
+        public Prova() : base() { }
+
         //Atributos
         [ForeignKey("Aluno")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
