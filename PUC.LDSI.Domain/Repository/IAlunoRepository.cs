@@ -8,6 +8,10 @@ namespace PUC.LDSI.Domain.Repository
     {
         Aluno ObterPorLogin(int login);
         Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(int id);
+        Task<List<Aluno>> ObterAlunos();
+        Task<Aluno> ObterAlunoAsync(int id);
+        Task<Aluno> ObterAlunoComProvasAsync(int id);
+        Task<Aluno> ObterAlunoDetailsAsync(int id);
 
     }
 }
