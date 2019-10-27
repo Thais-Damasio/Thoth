@@ -33,9 +33,7 @@ namespace PUC.LDSI.Domain.Services
 
             else if (publicacao.DataFim < Now)
                 throw new Exception($"Avaliação encerrada em {publicacao.DataFim.ToString("dd/MM/yyy HH:mm")}");
-
-
-
+            
             return false;
         }
 

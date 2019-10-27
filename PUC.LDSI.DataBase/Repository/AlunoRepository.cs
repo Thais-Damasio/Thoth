@@ -23,7 +23,7 @@ namespace PUC.LDSI.DataBase.Repository
         /// </summary>
         /// <param name="id">Id do aluno</param>
         /// <returns></returns>
-        public async Task<List<Publicacao>> ObterPulicoesPorAlunoAsync(int id)
+        public async Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(int id)
         {
             var publicacaos = await _context.Alunos
                                             .Include(x => x.Turma).ThenInclude(x => x.Publicacoes)

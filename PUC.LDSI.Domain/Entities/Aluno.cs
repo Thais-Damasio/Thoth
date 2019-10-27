@@ -8,6 +8,8 @@ namespace PUC.LDSI.Domain.Entities
 {
     public class Aluno : Entity
     {
+        public Aluno() : base() { }
+
         //Atributos
         [StringLength(150, ErrorMessage = "O campo {0} deve ter no máximo 150 caracteres")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

@@ -7,7 +7,7 @@ namespace PUC.LDSI.Domain.Repository
     public interface IAlunoRepository : IRepository<Aluno>
     {
         Aluno ObterPorLogin(int login);
-        Task<List<Publicacao>> ObterPulicoesPorAlunoAsync(int id);
+        Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(int id);
 
     }
 }
