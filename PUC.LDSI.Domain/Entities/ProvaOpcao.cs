@@ -15,12 +15,12 @@ namespace PUC.LDSI.Domain.Entities
         public int IdQuestaoProva { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Disciplina")]
-        [ForeignKey("Opção")]
+        [ForeignKey("AvaliacaoOpcao")]
         public int IdAvaliacaoOpcao { get; set; }
         public bool Resposta { get; set; }
 
         //Relacionamentos
-        public ProvaQuestao QuestaoProva { get; set; }
+        public ProvaQuestao ProvaQuestao { get; set; }
         public AvaliacaoOpcao AvaliacaoOpcao { get; set; }
 
     }

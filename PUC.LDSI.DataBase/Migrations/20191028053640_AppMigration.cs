@@ -12,11 +12,11 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Disciplinas",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(maxLength: 150, nullable: true)
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
+                    Nome = table.Column<string>(maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,14 +27,12 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Professores",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Nome = table.Column<string>(maxLength: 150, nullable: true),
-                    Email = table.Column<string>(maxLength: 150, nullable: true),
-                    Matricula = table.Column<int>(nullable: false),
-                    Senha = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,11 +43,11 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Turmas",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true)
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
+                    Nome = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,12 +58,12 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Avaliacoes",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Materia = table.Column<string>(nullable: true),
-                    Descricao = table.Column<string>(nullable: true),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
+                    Materia = table.Column<string>(nullable: false),
+                    Descricao = table.Column<string>(nullable: false),
                     IdProfessor = table.Column<int>(nullable: false),
                     IdDisciplina = table.Column<int>(nullable: false)
                 },
@@ -90,13 +88,12 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Alunos",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(maxLength: 150, nullable: true),
-                    Matricula = table.Column<int>(nullable: false),
-                    Senha = table.Column<string>(nullable: true),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
+                    Nome = table.Column<string>(maxLength: 150, nullable: false),
+                    Email = table.Column<string>(nullable: false),
                     IdTurma = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -114,12 +111,12 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "AvaliacaoQuestoes",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Tipo = table.Column<int>(nullable: false),
-                    Enunciado = table.Column<string>(nullable: true),
+                    Enunciado = table.Column<string>(nullable: false),
                     IdAvaliacao = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -137,15 +134,15 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Publicacoes",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     DataInicio = table.Column<DateTime>(nullable: false),
                     DataFim = table.Column<DateTime>(nullable: false),
                     Valor = table.Column<int>(nullable: false),
                     IdAvaliacao = table.Column<int>(nullable: false),
-                    TurmaId = table.Column<int>(nullable: true)
+                    IdTurma = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,8 +154,8 @@ namespace PUC.LDSI.DataBase.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Publicacoes_Turmas_TurmaId",
-                        column: x => x.TurmaId,
+                        name: "FK_Publicacoes_Turmas_IdTurma",
+                        column: x => x.IdTurma,
                         principalTable: "Turmas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -168,10 +165,10 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "Provas",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     IdAluno = table.Column<int>(nullable: false),
                     IdAvaliacao = table.Column<int>(nullable: false)
                 },
@@ -196,21 +193,20 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "AvaliacaoOpcoes",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Descricao = table.Column<string>(nullable: true),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
+                    Descricao = table.Column<string>(nullable: false),
                     Resposta = table.Column<bool>(nullable: false),
-                    IdAvaliacaoQuestao = table.Column<int>(nullable: false),
-                    QuestaoId = table.Column<int>(nullable: true)
+                    IdAvaliacaoQuestao = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AvaliacaoOpcoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AvaliacaoOpcoes_AvaliacaoQuestoes_QuestaoId",
-                        column: x => x.QuestaoId,
+                        name: "FK_AvaliacaoOpcoes_AvaliacaoQuestoes_IdAvaliacaoQuestao",
+                        column: x => x.IdAvaliacaoQuestao,
                         principalTable: "AvaliacaoQuestoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -220,10 +216,10 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "ProvaQuestoes",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     IdAvaliacaoQuestao = table.Column<int>(nullable: false),
                     IdProva = table.Column<int>(nullable: false),
                     Nota = table.Column<double>(nullable: false)
@@ -249,14 +245,13 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "ProvaOpcoes",
                 columns: table => new
                 {
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
                     IdQuestaoProva = table.Column<int>(nullable: false),
                     IdAvaliacaoOpcao = table.Column<int>(nullable: false),
-                    Resposta = table.Column<bool>(nullable: false),
-                    QuestaoProvaId = table.Column<int>(nullable: true)
+                    Resposta = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,8 +263,8 @@ namespace PUC.LDSI.DataBase.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ProvaOpcoes_ProvaQuestoes_QuestaoProvaId",
-                        column: x => x.QuestaoProvaId,
+                        name: "FK_ProvaOpcoes_ProvaQuestoes_IdQuestaoProva",
+                        column: x => x.IdQuestaoProva,
                         principalTable: "ProvaQuestoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -281,9 +276,9 @@ namespace PUC.LDSI.DataBase.Migrations
                 column: "IdTurma");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvaliacaoOpcoes_QuestaoId",
+                name: "IX_AvaliacaoOpcoes_IdAvaliacaoQuestao",
                 table: "AvaliacaoOpcoes",
-                column: "QuestaoId");
+                column: "IdAvaliacaoQuestao");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AvaliacaoQuestoes_IdAvaliacao",
@@ -306,9 +301,9 @@ namespace PUC.LDSI.DataBase.Migrations
                 column: "IdAvaliacaoOpcao");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProvaOpcoes_QuestaoProvaId",
+                name: "IX_ProvaOpcoes_IdQuestaoProva",
                 table: "ProvaOpcoes",
-                column: "QuestaoProvaId");
+                column: "IdQuestaoProva");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProvaQuestoes_IdAvaliacaoQuestao",
@@ -336,9 +331,9 @@ namespace PUC.LDSI.DataBase.Migrations
                 column: "IdAvaliacao");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Publicacoes_TurmaId",
+                name: "IX_Publicacoes_IdTurma",
                 table: "Publicacoes",
-                column: "TurmaId");
+                column: "IdTurma");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

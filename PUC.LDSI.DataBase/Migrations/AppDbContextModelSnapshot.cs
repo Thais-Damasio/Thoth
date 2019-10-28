@@ -29,16 +29,14 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<DateTime>("CriadoEm");
 
-                    b.Property<int>("IdTurma");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<int>("Matricula");
+                    b.Property<int>("IdTurma");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(150);
-
-                    b.Property<string>("Senha")
-                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -91,13 +89,11 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<int>("IdAvaliacaoQuestao");
 
-                    b.Property<int?>("QuestaoId");
-
                     b.Property<bool>("Resposta");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestaoId");
+                    b.HasIndex("IdAvaliacaoQuestao");
 
                     b.ToTable("AvaliacaoOpcoes");
                 });
@@ -158,12 +154,8 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(150);
 
-                    b.Property<int>("Matricula");
-
                     b.Property<string>("Nome")
                         .HasMaxLength(150);
-
-                    b.Property<string>("Senha");
 
                     b.HasKey("Id");
 
@@ -201,23 +193,19 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<DateTime>("AtualizadoEm");
 
-                    b.Property<int?>("AvaliacaoOpcaoId");
-
                     b.Property<DateTime>("CriadoEm");
 
                     b.Property<int>("IdAvaliacaoOpcao");
 
                     b.Property<int>("IdQuestaoProva");
 
-                    b.Property<int?>("QuestaoProvaId");
-
                     b.Property<bool>("Resposta");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvaliacaoOpcaoId");
+                    b.HasIndex("IdAvaliacaoOpcao");
 
-                    b.HasIndex("QuestaoProvaId");
+                    b.HasIndex("IdQuestaoProva");
 
                     b.ToTable("ProvaOpcoes");
                 });
@@ -263,7 +251,7 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<int>("IdAvaliacao");
 
-                    b.Property<int?>("TurmaId");
+                    b.Property<int>("IdTurma");
 
                     b.Property<int>("Valor");
 
@@ -271,7 +259,7 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.HasIndex("IdAvaliacao");
 
-                    b.HasIndex("TurmaId");
+                    b.HasIndex("IdTurma");
 
                     b.ToTable("Publicacoes");
                 });
@@ -317,9 +305,9 @@ namespace PUC.LDSI.DataBase.Migrations
 
             modelBuilder.Entity("PUC.LDSI.Domain.Entities.AvaliacaoOpcao", b =>
                 {
-                    b.HasOne("PUC.LDSI.Domain.Entities.AvaliacaoQuestao", "Questao")
+                    b.HasOne("PUC.LDSI.Domain.Entities.AvaliacaoQuestao", "AvaliacaoQuestao")
                         .WithMany("Opcoes")
-                        .HasForeignKey("QuestaoId")
+                        .HasForeignKey("IdAvaliacaoQuestao")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -348,12 +336,12 @@ namespace PUC.LDSI.DataBase.Migrations
                 {
                     b.HasOne("PUC.LDSI.Domain.Entities.AvaliacaoOpcao", "AvaliacaoOpcao")
                         .WithMany()
-                        .HasForeignKey("AvaliacaoOpcaoId")
+                        .HasForeignKey("IdAvaliacaoOpcao")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("PUC.LDSI.Domain.Entities.ProvaQuestao", "QuestaoProva")
+                    b.HasOne("PUC.LDSI.Domain.Entities.ProvaQuestao", "ProvaQuestao")
                         .WithMany("Opcao")
-                        .HasForeignKey("QuestaoProvaId")
+                        .HasForeignKey("IdQuestaoProva")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -379,7 +367,7 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.HasOne("PUC.LDSI.Domain.Entities.Turma", "Turma")
                         .WithMany("Publicacoes")
-                        .HasForeignKey("TurmaId")
+                        .HasForeignKey("IdTurma")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

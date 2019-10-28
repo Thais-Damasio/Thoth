@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using PUC.LDSI.Domain.Entities
-@inject SignInManager<Usuario> SignInManager
 @inject UserManager<Usuario> UserManager
 @model Avaliacao
 
@@ -10,7 +9,7 @@
 
 <div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
     <div class="uk-height-viewport">
-        <div class="uk-section uk-margin">
+        <div class="uk-section uk-margin uk-padding">
             <div class="uk-card uk-horizontal-center uk-card-default uk-card-body uk-width-1-2@m uk-width-1-1">
                 <h3 class="uk-card-title">Nova Avaliação</h3>
                 <hr />
@@ -23,14 +22,7 @@
                             <label asp-for="IdDisciplina" class="uk-form-label">Disciplina</label>
                             <select asp-for="IdDisciplina" class="uk-select" asp-items="ViewBag.IdDisciplina"></select>
                         </div>
-                    </div>
-
-                    @*Professor vinculado*@
-                    <div class="uk-margin">
-                        <div class="uk-form-controls">
-                            <label asp-for="IdProfessor" class="uk-form-label"></label>
-                            <select asp-for="IdProfessor" class="uk-select" asp-items="ViewBag.IdProfessor"></select>
-                        </div>
+                        <span asp-validation-for="IdDisciplina" class="uk-text-danger"></span>
                     </div>
 
                     @*Matéria*@

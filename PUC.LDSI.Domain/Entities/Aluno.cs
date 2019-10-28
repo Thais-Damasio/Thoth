@@ -13,10 +13,8 @@ namespace PUC.LDSI.Domain.Entities
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [Display(Name = "Matrícula")]
-        public int Matricula { get; set; }
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Senha { get; set; }
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
         [ForeignKey("Turma")]
         public int IdTurma { get; set; }
         

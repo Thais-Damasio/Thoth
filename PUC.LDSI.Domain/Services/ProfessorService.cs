@@ -12,6 +12,12 @@ namespace PUC.LDSI.Domain.Services
         {
             _professorRepository = professorRepository;
         }
+
+        public Professor BuscarPorEmail(string email)
+        {
+            return _professorRepository.ObterPorLogin(email);
+        }
+
         public async Task<int> IncluirNovoProfessorAsync(string email, string nome)
         {
             var professor = new Professor() { Nome = nome, Email = email };
