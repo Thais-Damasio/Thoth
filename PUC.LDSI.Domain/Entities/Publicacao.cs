@@ -14,6 +14,8 @@ namespace PUC.LDSI.Domain.Entities
         public int Valor { get; set; }
         [ForeignKey("Avaliacao")]
         public int IdAvaliacao { get; set; }
+        [ForeignKey("Turma")]
+        public int IdTurma { get; set; }
 
         //Relacionamentos
         public Avaliacao Avaliacao { get; set; }

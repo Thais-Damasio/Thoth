@@ -27,7 +27,9 @@ namespace PUC.LDSI.Domain.Entities
         //Relacionamentos
         public Professor Professor { get; set; }
         public Disciplina Disciplina { get; set; }
+        [Display(Name = "Publicações")]
         public List<Publicacao> Publicacoes { get; set; }
+        [Display(Name = "Questões")]
         public List<AvaliacaoQuestao> Questoes { get; set; }
         public List<Prova> Provas { get; set; }
 

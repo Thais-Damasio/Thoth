@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.LDSI.Domain.Entities;
 
 namespace PUC.LDSI.ModuloProfessor.Controllers
 {
+    [Authorize]
     public abstract class BaseController : Controller
     {
         protected readonly UserManager<Usuario> _userManager;

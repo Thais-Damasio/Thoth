@@ -17,9 +17,11 @@ namespace PUC.LDSI.Domain.Entities
         [Display(Name = "Avaliação")]
         [ForeignKey("Avaliacao")]
         public int IdAvaliacao { get; set; }
-    
+
         //Relacionamentos
+        [Display(Name = "Avaliação")]
         public Avaliacao Avaliacao { get; set; }
+        [Display(Name = "Opções")]
         public List<AvaliacaoOpcao> Opcoes { get; set; }
         
     }

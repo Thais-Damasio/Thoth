@@ -14,10 +14,6 @@ namespace PUC.LDSI.Domain.Entities
         [StringLength(150, ErrorMessage = "O campo {0} deve ter no máximo 150 caracteres")]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
-        [Display(Name = "Matrícula")]
-        public int Matricula { get; set; }
-        [Display(Name = "Senha")]
-        public string Senha { get; set; }
 
         //Relacionamentos
         public List<Avaliacao> Avaliacoes { get; set; }

@@ -20,7 +20,7 @@ namespace PUC.LDSI.Domain.Entities
         public int IdAvaliacaoQuestao { get; set; }
 
         //Relacionamentos
-        public AvaliacaoQuestao Questao { get; set; }
+        public AvaliacaoQuestao AvaliacaoQuestao { get; set; }
        
     }
 }

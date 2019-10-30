@@ -27,9 +27,14 @@ namespace PUC.LDSI.DataBase.Context
         {
 
             foreach (var relationship in modelbuilder.Model.GetEntityTypes()
-            .SelectMany(e => e.GetForeignKeys()))
+                .SelectMany(e => e.GetForeignKeys()))
             {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+                if (relationship.DeclaringEntityType.Name == modelbuilder.Entity<AvaliacaoQuestao>().Metadata.Name)
+                    relationship.DeleteBehavior = DeleteBehavior.Cascade;
+                else if (relationship.DeclaringEntityType.Name == modelbuilder.Entity<AvaliacaoOpcao>().Metadata.Name)
+                    relationship.DeleteBehavior = DeleteBehavior.Cascade;
+                else
+                    relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
             base.OnModelCreating(modelbuilder);
         }

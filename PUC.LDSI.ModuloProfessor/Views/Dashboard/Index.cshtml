@@ -29,9 +29,6 @@
                             <th class="uk-table-expand">
                                 @Html.DisplayNameFor(model => model.IdDisciplina)
                             </th>
-                            <th class="uk-table-expand">
-                                @Html.DisplayNameFor(model => model.AtualizadoEm)
-                            </th>
                             <th class="uk-table-expand"></th>
                         </tr>
                     </thead>
@@ -54,12 +51,12 @@
                                         @Html.DisplayFor(modelItem => item.Disciplina.Nome)
                                     </td>
                                     <td class="uk-preserve-width">
-                                        @Html.DisplayFor(modelItem => item.AtualizadoEm)
-                                    </td>
-                                    <td class="uk-preserve-width">
                                         <a asp-controller="Avaliacao" class="uk-margin-small-right" uk-tooltip="Editar" asp-action="Edit" asp-route-id="@item.Id" uk-icon="icon: file-edit"></a>
-                                        <a asp-controller="Avaliacao" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>
-                                        <span class="uk-margin-large-right"></span>
+                                        <a asp-controller="Avaliacao" class="uk-margin-small-right" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>
+                                        @if (item.Questoes != null && item.Questoes.Count > 0)
+                                        {
+                                            <a asp-controller="Publicacao" class="uk-margin-small-right" asp-action="Create" uk-tooltip="Publicar" uk-icon="icon: forward"></a>
+                                        }
                                         <a asp-controller="Avaliacao" asp-action="Delete" uk-tooltip="Apagar" asp-route-id="@item.Id" class="uk-hover-danger" uk-icon="icon: trash"></a>
                                     </td>
                                 </tr>
@@ -68,7 +65,7 @@
                         else
                         {
                             <tr>
-                                <td class="uk-text-center" colspan="7">
+                                <td class="uk-text-center" colspan="5">
                                     <img class="uk-display-block uk-align-center" width="60" src="~/images/empty.png" />
                                     <span class="uk-text-muted">Nenhuma avaliação cadastrada ainda.</span>
                                 </td>
