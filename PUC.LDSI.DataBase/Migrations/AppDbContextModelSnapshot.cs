@@ -308,7 +308,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.HasOne("PUC.LDSI.Domain.Entities.AvaliacaoQuestao", "AvaliacaoQuestao")
                         .WithMany("Opcoes")
                         .HasForeignKey("IdAvaliacaoQuestao")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PUC.LDSI.Domain.Entities.AvaliacaoQuestao", b =>
@@ -316,7 +316,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.HasOne("PUC.LDSI.Domain.Entities.Avaliacao", "Avaliacao")
                         .WithMany("Questoes")
                         .HasForeignKey("IdAvaliacao")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PUC.LDSI.Domain.Entities.Prova", b =>

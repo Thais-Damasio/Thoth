@@ -1,0 +1,232 @@
+﻿@using PUC.LDSI.Domain.Entities
+@model PUC.LDSI.Domain.Entities.AvaliacaoQuestao
+
+@{
+    ViewData["Title"] = "Questão";
+    string error = ViewData["ErrorMessage"] != null? ViewData["ErrorMessage"].ToString() : "";
+    Avaliacao avaliacao = (Avaliacao)ViewData["Avaliacao"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section uk-padding">
+            <div class="uk-card uk-horizontal-center uk-card-default uk-card-body uk-width-1-2@m uk-width-1-1">
+
+                @if (error != string.Empty)
+                {
+                    <div class="uk-alert-danger" uk-alert>
+                        <a class="uk-alert-close" uk-close></a>
+                        <p>@error</p>
+                    </div>
+                }
+
+                <h3 class="uk-card-title uk-margin-remove-bottom">Nova Questão</h3>
+                <small class="uk-text-primary">Para a avaliação: @avaliacao.Materia</small>
+                <hr />
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
+
+                    @*Tipo*@
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Tipo</label>
+                        <select asp-for="Tipo" class="uk-select">
+                            <option value="1">Múltipla escolha</option>
+                            <option value="2">Verdadeiro ou Falso</option>
+                        </select>
+                        <span asp-validation-for="Tipo" class="uk-text-danger"></span>
+                    </div>
+
+                    @*Enunciado*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label class="uk-form-label" for="form-stacked-text">Enunciado</label>
+                            <textarea asp-for="Enunciado" class="uk-textarea" rows="5" placeholder="Informe o enunciado da questão"></textarea>
+                        </div>
+                        <span asp-validation-for="Enunciado" class="uk-text-danger"></span>
+                    </div>
+
+                    @*Id da Avaliação*@
+                    <input asp-for="IdAvaliacao" type="hidden" value="@avaliacao.Id" />
+
+                    @*Opções da Avaliação*@
+                    <h4 class="uk-text-muted uk-margin-remove-bottom">
+                        <span uk-icon="icon: bookmark"></span>
+                        Opções
+                    </h4>
+                    <table id="o-table" class="uk-table uk-table-striped">
+                        <tbody>
+                            <tr id="n-op">
+                                <td>Nenhuma opção inserida</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="o-warning" class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">
+                        <small class="uk-text-warning">
+                            <span uk-icon="icon: warning"></span>&ensp; Insira no mínimo 4 opções.
+                        </small>
+                    </div>
+
+                    @*Botão de adicionar opções*@
+                    <div class="uk-margin-top uk-clearfix">
+                        <div class="uk-float-right">
+                            <a onclick="novaOpcao()" class="uk-icon-button" uk-icon="icon: plus"></a>
+                            <a onclick="novaOpcao()">Adicionar Opção</a>
+                        </div>
+                    </div>
+
+                    @*Espaço para adicionar nova opção*@
+                    <div class="uk-padding-small uk-background-default" id="novaOpcao" style="display: none">
+                        @*Resposta*@
+                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                            <label><input id="o-resposta" class="uk-checkbox" type="checkbox"> Verdadeira</label>
+                        </div>
+
+                        @*Descrição*@
+                        <div class="uk-margin">
+                            <div class="uk-form-controls">
+                                <label class="uk-form-label" for="form-stacked-text">Descrição</label>
+                                <input id="o-descricao" class="uk-input" rows="5" placeholder="Informe a descrição da opção" />
+                            </div>
+                        </div>
+
+                        @*Salvar ou remover opção*@
+                        <div class="uk-margin">
+                            <div class="uk-clearfix">
+                                <div class="uk-float-left">
+                                    <button onclick="salvarOpcao()" class="uk-button uk-button-secondary">Adicionar Opção</button>
+                                </div>
+                                <div class="uk-float-right">
+                                    <a onclick="cancelarNovaOpcao()" class="uk-button uk-button-default">Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    @*Submit do form*@
+                    <div class="uk-margin-top uk-clearfix">
+                        <div class="uk-float-left">
+                            <button class="uk-button uk-button-primary" type="submit">Salvar</button>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-action="Edit" asp-controller="Avaliacao" asp-route-id="@avaliacao.Id" class="uk-button uk-button-default">Voltar a Avaliação</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var indexQ = 0;
+    //Função de permitir add nova opção
+    function novaOpcao() {
+        event.preventDefault();
+        document.getElementById("novaOpcao").style.display = "block";
+    }
+    //Função de fechar inserção de nova opção
+    function cancelarNovaOpcao() {
+        event.preventDefault();
+        document.getElementById("novaOpcao").style.display = "none";
+    }
+    //Função para salvar uma opção em uma questão
+    function salvarOpcao() {
+        event.preventDefault();
+        let op = new AvaliacaoOpcao();
+        op.Resposta = $("#o-resposta").is(":checked");
+        op.Descricao = $("#o-descricao").val();
+
+        //Se a opção estiver preenchida
+        if (op.Descricao != '') {
+            //Pega a tabela de opções e apaga a linha de "nenhuma opção inserida"
+            let table = document.getElementById("o-table");
+
+            //Cria a linha e as células para a opção
+            let row = table.insertRow(-1);
+            let resCell = row.insertCell(0);
+            let descCell = row.insertCell(1);
+            let removeCell = row.insertCell(2);
+
+            //Cria o input de verdadeiro ou falso
+            let inputRes = document.createElement("input");
+            inputRes.checked = op.Resposta;
+            inputRes.classList.add("uk-checkbox");
+            inputRes.type = "checkbox";
+            inputRes.readOnly = true;
+            if (op.Resposta == true)
+                inputRes.value = true;
+            else
+                inputRes.value = false;
+            inputRes.name = "Opcoes[" + indexQ + "].Resposta";
+
+            //Cria o ícone de remover opção
+            let iconTrash = document.createElement("a");
+            iconTrash.classList.add("uk-hover-danger");
+            iconTrash.setAttribute("uk-icon", "icon: trash");
+            iconTrash.setAttribute("uk-tooltip", "Remover");
+
+            //Cria o input de descrição
+            let inputDesc = document.createElement("input");
+            inputDesc.classList.add("no-input");
+            inputDesc.value = op.Descricao;
+            inputDesc.type = "text";
+            inputDesc.readOnly = true;
+            inputDesc.name = "Opcoes[" + indexQ + "].Descricao";
+
+            //Adiciona o evento de remoção
+            iconTrash.addEventListener("click", function () { removeRow(this) });
+
+            //Contabiliza o número de opções
+            indexQ++;
+            hasFourOptions(table);
+
+            //Adiciona as linhas
+            resCell.appendChild(inputRes);
+            removeCell.appendChild(iconTrash);
+            descCell.appendChild(inputDesc);
+
+            //Apaga o campo de descrição
+            $("#o-descricao").val('');
+        }
+    }
+    //Valida se as 4 opções foram inseridas
+    function hasFourOptions(table) {
+        //Linha de "nenhuma opção inserida"
+        if (indexQ == 0) {
+            document.getElementById("n-op").style.display = "block";
+        }
+        else {
+            document.getElementById("n-op").style.display = "none";
+        }
+
+        //Footer de warning para mínimo de 4 opções
+        if (indexQ >= 4) {
+            document.getElementById("o-warning").style.display = "none";
+        }
+        else {
+            document.getElementById("o-warning").style.display = "block";
+        }
+    }
+    //Função para remover uma opção inserida
+    function removeRow(el) {
+        var tdEl = el.parentNode;
+
+        let row = $(tdEl).closest("tr");
+        row.remove();
+        indexQ--;
+
+        //Pega a tabela de questões
+        let table = document.getElementById("o-table");
+        hasFourOptions(table)
+    }
+    //Definição de uma opção
+    class AvaliacaoOpcao {
+        Resposta
+        Descricao
+    }
+</script>
+
+

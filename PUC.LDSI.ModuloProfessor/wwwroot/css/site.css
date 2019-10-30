@@ -10,7 +10,7 @@
     margin: 30px auto;
 }
 .uk-table-hover tbody tr:hover {
-    background: #010031;
+    background: #aab2cc;
     color: white !important;
 }
 input[type="checkbox"][readonly] {

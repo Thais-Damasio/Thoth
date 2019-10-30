@@ -127,7 +127,7 @@ namespace PUC.LDSI.DataBase.Migrations
                         column: x => x.IdAvaliacao,
                         principalTable: "Avaliacoes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +209,7 @@ namespace PUC.LDSI.DataBase.Migrations
                         column: x => x.IdAvaliacaoQuestao,
                         principalTable: "AvaliacaoQuestoes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

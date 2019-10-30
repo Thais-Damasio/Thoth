@@ -10,7 +10,7 @@ using PUC.LDSI.DataBase.Context;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191028053640_AppMigration")]
+    [Migration("20191029212401_AppMigration")]
     partial class AppMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -310,7 +310,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.HasOne("PUC.LDSI.Domain.Entities.AvaliacaoQuestao", "AvaliacaoQuestao")
                         .WithMany("Opcoes")
                         .HasForeignKey("IdAvaliacaoQuestao")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PUC.LDSI.Domain.Entities.AvaliacaoQuestao", b =>
@@ -318,7 +318,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.HasOne("PUC.LDSI.Domain.Entities.Avaliacao", "Avaliacao")
                         .WithMany("Questoes")
                         .HasForeignKey("IdAvaliacao")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PUC.LDSI.Domain.Entities.Prova", b =>

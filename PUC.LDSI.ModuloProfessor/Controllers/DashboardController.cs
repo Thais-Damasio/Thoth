@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,10 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         private readonly IAvaliacaoService _avaliacaoService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
 
-        public DashboardController(IAvaliacaoService avaliacaoService, IAvaliacaoRepository avaliacaoRepository, UserManager<Usuario> _user) : base(_user)
+        public DashboardController(
+            IAvaliacaoService avaliacaoService,
+            IAvaliacaoRepository avaliacaoRepository,
+            UserManager<Usuario> _user) : base(_user)
         {
             _avaliacaoService = avaliacaoService;
             _avaliacaoRepository = avaliacaoRepository;

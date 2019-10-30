@@ -12,7 +12,7 @@
                 <h3 class="uk-card-title">Editar Avaliação</h3>
                 <hr />
                 <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
 
                     @*Disciplina*@
                     <div class="uk-margin">
@@ -20,14 +20,7 @@
                             <label asp-for="IdDisciplina" class="uk-form-label">Disciplina</label>
                             <select asp-for="IdDisciplina" class="uk-select" asp-items="ViewBag.IdDisciplina"></select>
                         </div>
-                    </div>
-
-                    @*Professor vinculado*@
-                    <div class="uk-margin">
-                        <div class="uk-form-controls">
-                            <label asp-for="IdProfessor" class="uk-form-label"></label>
-                            <select asp-for="IdProfessor" class="uk-select" asp-items="ViewBag.IdProfessor"></select>
-                        </div>
+                        <span asp-validation-for="IdDisciplina" class="uk-text-danger"></span>
                     </div>
 
                     @*Matéria*@
@@ -48,106 +41,71 @@
                         <span asp-validation-for="Descricao" class="uk-text-danger"></span>
                     </div>
 
-                    <hr />
-
-                    <h3 class="uk-legend uk-margin-remove-bottom">Questões</h3>
-                    <small>1 - Múltipla Escolha &emsp; 2 - Verdadeiro ou Falso</small>
-
-                    <div class="uk-margin-bottom">
-                        @*Tabela de Questões*@
-                        <table id="q-table" class="uk-table uk-table-striped uk-table-hover">
-                            <tbody>
-                                @*Questões adicionadas*@
-                            </tbody>
-                        </table>
-                        <span>
-                            <a onclick="novaQuestao()" class="uk-icon-button" uk-icon="icon: plus"></a>
-                            <a onclick="novaQuestao()">Adicionar Questão</a>
-                        </span>
-
-                        @*Nova questão*@
-                        <div id="novaQuestao" class="uk-padding-small uk-margin-small-top uk-background-muted" style="display: none">
-                            @*Tipo*@
-                            <div class="uk-margin">
-                                <label class="uk-form-label" for="form-stacked-text">Tipo</label>
-                                <select id="q-tipo" class="uk-select">
-                                    <option value="1">Múltipla escolha</option>
-                                    <option value="2">Verdadeiro ou Falso</option>
-                                </select>
-                            </div>
-
-                            @*Enunciado*@
-                            <div class="uk-margin">
-                                <div class="uk-form-controls">
-                                    <label class="uk-form-label" for="form-stacked-text">Enunciado</label>
-                                    <textarea id="q-enunciado" class="uk-textarea" rows="5" placeholder="Informe o enunciado da questão"></textarea>
-                                </div>
-                            </div>
-
-                            <label class="uk-form-label" for="form-stacked-text">Opções</label>
-                            <table id="o-table" class="uk-table">
-                                <tbody></tbody>
-                            </table>
-                            <span>
-                                <a onclick="novaOpcao()" class="uk-icon-button" uk-icon="icon: plus"></a>
-                                <a onclick="novaOpcao()">Adicionar Opção</a>
-                            </span>
-
-                            @*Adicionar nova opção*@
-                            <div class="uk-padding-small uk-background-default" id="novaOpcao" style="display: none">
-                                @*Resposta*@
-                                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                    <label><input id="o-resposta" class="uk-checkbox" type="checkbox"> Verdadeira</label>
-                                </div>
-
-                                @*Descrição*@
-                                <div class="uk-margin">
-                                    <div class="uk-form-controls">
-                                        <label class="uk-form-label" for="form-stacked-text">Descrição</label>
-                                        <input id="o-descricao" class="uk-input" rows="5" placeholder="Informe a descrição da opção" />
-                                    </div>
-                                </div>
-
-                                @*Salvar ou remover opção*@
-                                <div class="uk-margin">
-                                    <div class="uk-clearfix">
-                                        <div class="uk-float-left">
-                                            <button onclick="salvarOpcao()" class="uk-button uk-button-secondary">Adicionar Opção</button>
-                                        </div>
-                                        <div class="uk-float-right">
-                                            <a onclick="cancelarNovaOpcao()" class="uk-button uk-button-default">Cancelar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @*Salvar ou remover questão*@
-                            <div class="uk-margin">
-                                <div class="uk-clearfix">
-                                    <div class="uk-float-left">
-                                        <button onclick="salvarQuestao()" class="uk-button uk-button-secondary">Adicionar Questão</button>
-                                    </div>
-                                    <div class="uk-float-right">
-                                        <a onclick="cancelarNovaQuestao()" class="uk-button uk-button-default">Cancelar</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <hr />
-
                     @*Submit do form*@
-                    <div class="uk-clearfix">
+                    <div class="uk-margin-top uk-clearfix">
                         <div class="uk-float-left">
                             <button class="uk-button uk-button-primary" type="submit">Salvar</button>
                         </div>
-                        <div class="uk-float-right">
-                            <a asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
-                        </div>
                     </div>
                 </form>
+
+                <h4 class="uk-legend uk-margin-remove-bottom">
+                    <span uk-icon="icon: bookmark"></span>
+                    Questões
+                </h4>
+                @*Tabela de Questões*@
+                @if (Model.Questoes.Count > 0)
+                {
+                    <table id="q-table" class="uk-table uk-table-striped uk-table-hover">
+                        <tbody>
+                            @foreach (var questao in Model.Questoes)
+                            {
+                                <tr>
+                                    <td>
+                                        <small class="uk-text-primary uk-display-block">
+                                            @(questao.Tipo == 1 ? "Múltipla Escolha" : "Verdadeiro ou falso")
+                                        </small>
+                                        <span>@questao.Enunciado</span>
+                                        <ul class="uk-list uk-list-divider">
+                                            @foreach (var opcao in questao.Opcoes)
+                                            {
+                                                <li>
+                                                    ( <span class="@(opcao.Resposta? "uk-text-success" : "uk-text-danger")">@(opcao.Resposta ? "V" : "F")</span> )
+                                                    &emsp;@opcao.Descricao
+                                                </li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a asp-controller="AvaliacaoQuestao" asp-action="Delete" uk-tooltip="Apagar" asp-route-id="@questao.Id" class="uk-hover-danger" uk-icon="icon: trash"></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <table id="q-table" class="uk-table uk-table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Nenhuma questão adicionada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+
+                <form class="uk-text-right" asp-action="CreateByAvaliacao" asp-controller="AvaliacaoQuestao">
+                    <input type="hidden" name="id_avaliacao" value="@Model.Id" />
+                    <button class="uk-icon-button" uk-icon="icon: plus" type="submit"></button>
+                    <button class="uk-button uk-button-link" type="submit">Adicionar Questão</button>
+                </form>
+
+                <hr />
+
+                <div class="uk-float-right">
+                    <a asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                </div>
             </div>
         </div>
     </div>
@@ -316,56 +274,80 @@
 </script>
 
 
+<div class="uk-margin-bottom">
 
-<h2>Edit</h2>
+    @*Nova questão*@
+    <div id="novaQuestao" class="uk-padding-small uk-margin-small-top uk-background-muted" style="display: none">
+        @*Tipo*@
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text">Tipo</label>
+            <select id="q-tipo" class="uk-select">
+                <option value="1">Múltipla escolha</option>
+                <option value="2">Verdadeiro ou Falso</option>
+            </select>
+        </div>
 
-<h4>Avaliacao</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Materia" class="control-label"></label>
-                <input asp-for="Materia" class="form-control" />
-                <span asp-validation-for="Materia" class="text-danger"></span>
+        @*Enunciado*@
+        <div class="uk-margin">
+            <div class="uk-form-controls">
+                <label class="uk-form-label" for="form-stacked-text">Enunciado</label>
+                <textarea id="q-enunciado" class="uk-textarea" rows="5" placeholder="Informe o enunciado da questão"></textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
-                <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+        <label class="uk-form-label" for="form-stacked-text">Opções</label>
+        <table id="o-table" class="uk-table">
+            <tbody></tbody>
+        </table>
+        <span>
+            <a onclick="novaOpcao()" class="uk-icon-button" uk-icon="icon: plus"></a>
+            <a onclick="novaOpcao()">Adicionar Opção</a>
+        </span>
+
+        @*Adicionar nova opção*@
+        <div class="uk-padding-small uk-background-default" id="novaOpcao" style="display: none">
+            @*Resposta*@
+            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                <label><input id="o-resposta" class="uk-checkbox" type="checkbox"> Verdadeira</label>
             </div>
-            <div class="form-group">
-                <label asp-for="IdProfessor" class="control-label"></label>
-                <select asp-for="IdProfessor" class="form-control" asp-items="ViewBag.IdProfessor"></select>
-                <span asp-validation-for="IdProfessor" class="text-danger"></span>
+
+            @*Descrição*@
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <label class="uk-form-label" for="form-stacked-text">Descrição</label>
+                    <input id="o-descricao" class="uk-input" rows="5" placeholder="Informe a descrição da opção" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="IdDisciplina" class="control-label"></label>
-                <select asp-for="IdDisciplina" class="form-control" asp-items="ViewBag.IdDisciplina"></select>
-                <span asp-validation-for="IdDisciplina" class="text-danger"></span>
+
+            @*Salvar ou remover opção*@
+            <div class="uk-margin">
+                <div class="uk-clearfix">
+                    <div class="uk-float-left">
+                        <button onclick="salvarOpcao()" class="uk-button uk-button-secondary">Adicionar Opção</button>
+                    </div>
+                    <div class="uk-float-right">
+                        <a onclick="cancelarNovaOpcao()" class="uk-button uk-button-default">Cancelar</a>
+                    </div>
+                </div>
             </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CriadoEm" class="control-label"></label>
-                <input asp-for="CriadoEm" class="form-control" />
-                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+        </div>
+
+        @*Salvar ou remover questão*@
+        <div class="uk-margin">
+            <div class="uk-clearfix">
+                <div class="uk-float-left">
+                    <button onclick="salvarQuestao()" class="uk-button uk-button-secondary">Adicionar Questão</button>
+                </div>
+                <div class="uk-float-right">
+                    <a onclick="cancelarNovaQuestao()" class="uk-button uk-button-default">Cancelar</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="AtualizadoEm" class="control-label"></label>
-                <input asp-for="AtualizadoEm" class="form-control" />
-                <span asp-validation-for="AtualizadoEm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
+
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<hr />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

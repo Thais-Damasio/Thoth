@@ -1,0 +1,49 @@
+﻿@model PUC.LDSI.Domain.Entities.AvaliacaoQuestao
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-card uk-card-default uk-width-1-2@m uk-horizontal-center">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom"> Apagar Questão</h3>
+                    <p class="uk-text-danger"> Você tem certeza que deseja apagar esta questão?</p>
+                </div>
+                <div class="uk-card-body">
+                    <ul class="uk-list uk-list-divider">
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Tipo) </span>
+                            @(Model.Tipo == 1 ? "Múltipla Escolha" : "Verdadeiro Falso")
+                        </li>
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Enunciado) </span>
+                            @Html.DisplayNameFor(model => model.Enunciado)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Opcoes) </span>
+                            @Html.DisplayFor(model => model.Enunciado)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.CriadoEm) </span>
+                            @Html.DisplayFor(model => model.CriadoEm)
+                        </li>
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.AtualizadoEm) </span>
+                            @Html.DisplayFor(model => model.AtualizadoEm)
+                        </li>
+                    </ul>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Deletar" class="uk-button uk-button-danger" />
+                        <a asp-action="Edit" asp-controller="Avaliacao" asp-route-id="@Model.IdAvaliacao" class="uk-button uk-button-default">Voltar a Avaliação</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

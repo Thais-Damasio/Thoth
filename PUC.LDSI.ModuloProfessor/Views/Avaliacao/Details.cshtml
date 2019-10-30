@@ -38,23 +38,18 @@
                                 @foreach (var questao in Model.Questoes)
                                 {
                                     <span class="uk-display-block">
+                                        <small class="uk-text-primary uk-display-block uk-background-muted uk-text-center">@(questao.Tipo == 1? "Múltipla Escolha" : "Verdadeiro ou Falso")</small>
                                         <span class="uk-text-bold">@i.&nbsp;</span>@questao.Enunciado
                                     </span>
-                                    @foreach (var opcao in questao.Opcoes)
-                                    {
-                                        @if (questao.Tipo == 1)
+                                    <ul class="uk-list">
+                                        @foreach (var opcao in questao.Opcoes)
                                         {
-                                            <span class="uk-display-block">
-                                                <span class="uk-text-bold">()&nbsp;</span>@opcao.Descricao
-                                            </span>
+                                            <li>
+                                                ( <span class="@(opcao.Resposta? "uk-text-success" : "uk-text-danger")">@(opcao.Resposta ? "V" : "F")</span> )
+                                                &emsp;@opcao.Descricao
+                                            </li>
                                         }
-                                        else
-                                        {
-                                            <span class="uk-display-block">
-                                                <span class="uk-text-bold">()&nbsp;</span>@opcao.Descricao
-                                            </span>
-                                        }
-                                    }
+                                    </ul>
                                     i++;
                                 }
                             }
