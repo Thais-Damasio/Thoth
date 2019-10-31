@@ -13,8 +13,10 @@ namespace PUC.LDSI.Domain.Entities
         public int Id { get; set; }
 
         //Atributos de apoio
+        [DataType(DataType.Date)]
         [Display(Name = "Criado em")]
         public DateTime CriadoEm { get; set; }
+        [DataType(DataType.Date)]
         [Display(Name = "Última Atualização")]
         public DateTime AtualizadoEm { get; set; }
     }

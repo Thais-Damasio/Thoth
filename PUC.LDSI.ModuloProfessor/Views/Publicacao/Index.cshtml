@@ -1,72 +1,87 @@
 ﻿@model IEnumerable<PUC.LDSI.Domain.Entities.Publicacao>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Publicações";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-margin-large"></div>
+            <div class="uk-overflow-auto uk-margin-right uk-margin-left">
+                <table class="uk-table uk-width-2-3 uk-table-hover uk-table-small uk-table-divider uk-background-muted uk-horizontal-center">
+                    <caption class="uk-text-center">
+                        <h2 class="uk-text-white">Publicações</h2>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.DataInicio)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.DataFim)
+                            </th>
+                            <th class="uk-table-small">
+                                @Html.DisplayNameFor(model => model.Valor)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Avaliacao)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Turma)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.CriadoEm)
+                            </th>
+                            <th class="uk-table-expand"></th>
+                        </tr>
+                    </thead>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataFim)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Avaliacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Turma)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriadoEm)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AtualizadoEm)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Avaliacao.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Turma.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CriadoEm)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AtualizadoEm)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.DataInicio)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.DataFim)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Valor)
+                                    </td>
+                                    <td class="uk-text-truncate">
+                                        @Html.DisplayFor(modelItem => item.Avaliacao.Materia)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Turma.Nome)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.CriadoEm)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        <a asp-controller="Publicacao" class="uk-margin-small-right" uk-tooltip="Editar" asp-action="Edit" asp-route-id="@item.Id" uk-icon="icon: file-edit"></a>
+                                        <a asp-controller="Publicacao" class="uk-margin-small-right" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>
+                                        <a asp-controller="Publicacao" asp-action="Delete" uk-tooltip="Apagar" asp-route-id="@item.Id" class="uk-hover-danger" uk-icon="icon: trash"></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="uk-text-center" colspan="5">
+                                    <img class="uk-display-block uk-align-center" width="60" src="~/images/empty.png" />
+                                    <span class="uk-text-muted">Nenhuma publicação cadastrada ainda.</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

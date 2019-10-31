@@ -10,7 +10,7 @@ using PUC.LDSI.DataBase.Context;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191029212401_AppMigration")]
+    [Migration("20191031020925_AppMigration")]
     partial class AppMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,15 +247,18 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<DateTime>("CriadoEm");
 
-                    b.Property<DateTime>("DataFim");
+                    b.Property<DateTime?>("DataFim")
+                        .IsRequired();
 
-                    b.Property<DateTime>("DataInicio");
+                    b.Property<DateTime?>("DataInicio")
+                        .IsRequired();
 
                     b.Property<int>("IdAvaliacao");
 
                     b.Property<int>("IdTurma");
 
-                    b.Property<int>("Valor");
+                    b.Property<int?>("Valor")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

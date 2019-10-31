@@ -1,6 +1,9 @@
 ﻿using PUC.LDSI.DataBase.Context;
 using PUC.LDSI.Domain.Repository;
 using PUC.LDSI.Domain.Entities;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace PUC.LDSI.DataBase.Repository
 {
@@ -10,6 +13,16 @@ namespace PUC.LDSI.DataBase.Repository
         public PublicacaoRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+
+
+        public async Task<Publicacao> ObterComRelacoesAsync(int id)
+        {
+            var publicacao = await _context.Publicacoes
+               .Include(a => a.Avaliacao)
+               .Include(t => t.Turma)
+               .Where(x => x.Id == id).FirstOrDefaultAsync();
+            return publicacao;
         }
     }
 }

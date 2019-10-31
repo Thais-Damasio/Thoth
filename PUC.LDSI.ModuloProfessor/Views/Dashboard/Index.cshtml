@@ -15,8 +15,15 @@
                             <a asp-controller="Avaliacao" asp-action="Create" class="uk-button uk-button-primary">Criar Avaliação</a>
                         </div>
                     </caption>
+                    <caption class="uk-margin-small-bottom">
+                        <span class="uk-text-success" uk-icon="icon: bookmark"></span> Cadastro Completo&nbsp;|
+                        <span class="uk-text-danger" uk-icon="icon: bookmark"></span> Cadastro Incompleto
+                    </caption>
                     <thead>
                         <tr>
+                            <th class="uk-table-small">
+                                Status
+                            </th>
                             <th class="uk-table-shrink">
                                 @Html.DisplayNameFor(model => model.Materia)
                             </th>
@@ -38,6 +45,9 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
+                                    <td class="uk-table-small">
+                                        <span class="@(item.Questoes != null && item.Questoes.Count > 0? "uk-text-success":"uk-text-danger")" uk-icon="icon: bookmark"></span>
+                                    </td>
                                     <td class="uk-preserve-width">
                                         @Html.DisplayFor(modelItem => item.Materia)
                                     </td>
@@ -55,7 +65,7 @@
                                         <a asp-controller="Avaliacao" class="uk-margin-small-right" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>
                                         @if (item.Questoes != null && item.Questoes.Count > 0)
                                         {
-                                            <a asp-controller="Publicacao" class="uk-margin-small-right" asp-action="Create" uk-tooltip="Publicar" uk-icon="icon: forward"></a>
+                                            <a asp-controller="Publicacao" class="uk-margin-small-right" asp-action="Create" asp-route-id="@item.Id" uk-tooltip="Publicar" uk-icon="icon: forward"></a>
                                         }
                                         <a asp-controller="Avaliacao" asp-action="Delete" uk-tooltip="Apagar" asp-route-id="@item.Id" class="uk-hover-danger" uk-icon="icon: trash"></a>
                                     </td>

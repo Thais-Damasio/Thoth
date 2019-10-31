@@ -1,25 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.DataBase.Context;
 using PUC.LDSI.Domain.Entities;
+using PUC.LDSI.Domain.Repository;
+using PUC.LDSI.Domain.Services.Interfaces;
 
 namespace PUC.LDSI.ModuloProfessor.Controllers
 {
-    public class PublicacaoController : Controller
+    public class PublicacaoController : BaseController
     {
         private readonly AppDbContext _context;
+        private readonly IPublicacaoService _publicacaoService;
+        private readonly IAvaliacaoRepository _avaliacaoRepository;
+        private readonly IPublicacaoRepository _publicacaoRepository;
+        private readonly ITurmaRepository _turmaRepository;
 
-        public PublicacaoController(AppDbContext context)
+        public PublicacaoController(
+            AppDbContext context,
+            IPublicacaoService publicacaoService,
+            IAvaliacaoRepository avaliacaoRepository,
+            IPublicacaoRepository publicacaoRepository,
+            ITurmaRepository turmaRepository,
+            UserManager<Usuario> _user) : base(_user)
         {
             _context = context;
+            _publicacaoService = publicacaoService;
+            _avaliacaoRepository = avaliacaoRepository;
+            _publicacaoRepository = publicacaoRepository;
+            _turmaRepository = turmaRepository;
         }
 
-        // GET: Publicacao
+        // GET: Publicacao/
         public async Task<IActionResult> Index()
         {
             var appDbContext = _context.Publicacoes.Include(p => p.Avaliacao).Include(p => p.Turma);
@@ -46,11 +64,23 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
             return View(publicacao);
         }
 
-        // GET: Publicacao/Create
-        public IActionResult Create()
+        // GET: Publicacao/Create/3
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["IdAvaliacao"] = new SelectList(_context.Avaliacoes, "Id", "Descricao");
-            ViewData["IdTurma"] = new SelectList(_context.Turmas, "Id", "Nome");
+            //id davaliação de destino
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Avaliacao av = await _avaliacaoRepository.ObterComPublicacaoAsync(id.Value);
+            if(av == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["IdAvaliacao"] = av.Id;
+            ViewData["IdTurma"] = new MultiSelectList(await _turmaRepository.ObterTurmasNaoPublicadas(av.Id), "Id", "Nome");
             return View();
         }
 
@@ -59,16 +89,16 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Valor,IdAvaliacao,IdTurma,Id,CriadoEm,AtualizadoEm")] Publicacao publicacao)
+        public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Valor,IdAvaliacao,Turmas")] PublicacaoViewModel publicacao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(publicacao);
-                await _context.SaveChangesAsync();
+                await _publicacaoService.IncluirNovaPublicacaoAsync(
+                    publicacao.DataInicio.Value, publicacao.DataFim.Value, publicacao.Valor.Value, publicacao.IdAvaliacao, publicacao.Turmas);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAvaliacao"] = new SelectList(_context.Avaliacoes, "Id", "Descricao", publicacao.IdAvaliacao);
-            ViewData["IdTurma"] = new SelectList(_context.Turmas, "Id", "Nome", publicacao.IdTurma);
+            ViewData["IdAvaliacao"] = publicacao.IdAvaliacao;
+            ViewData["IdTurma"] = new MultiSelectList(await _turmaRepository.ObterTurmasNaoPublicadas(publicacao.IdAvaliacao), "Id", "Nome");
             return View(publicacao);
         }
 
@@ -80,13 +110,11 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 return NotFound();
             }
 
-            var publicacao = await _context.Publicacoes.FindAsync(id);
+            var publicacao = await _publicacaoRepository.ObterComRelacoesAsync(id.Value);
             if (publicacao == null)
             {
                 return NotFound();
             }
-            ViewData["IdAvaliacao"] = new SelectList(_context.Avaliacoes, "Id", "Descricao", publicacao.IdAvaliacao);
-            ViewData["IdTurma"] = new SelectList(_context.Turmas, "Id", "Nome", publicacao.IdTurma);
             return View(publicacao);
         }
 
@@ -95,36 +123,20 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DataInicio,DataFim,Valor,IdAvaliacao,IdTurma,Id,CriadoEm,AtualizadoEm")] Publicacao publicacao)
+        public async Task<IActionResult> Edit(int id, [Bind("DataInicio,DataFim,Valor,Id")] Publicacao publicacao)
         {
             if (id != publicacao.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(publicacao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PublicacaoExists(publicacao.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _publicacaoService.AlterarPublicacaoAsync(
+                    publicacao.Id, publicacao.DataInicio.Value, publicacao.DataFim.Value, publicacao.Valor.Value);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAvaliacao"] = new SelectList(_context.Avaliacoes, "Id", "Descricao", publicacao.IdAvaliacao);
-            ViewData["IdTurma"] = new SelectList(_context.Turmas, "Id", "Nome", publicacao.IdTurma);
-            return View(publicacao);
+            var publicacaoCompleta = await _publicacaoRepository.ObterComRelacoesAsync(id);
+            return View(publicacaoCompleta);
         }
 
         // GET: Publicacao/Delete/5
@@ -134,16 +146,11 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
             {
                 return NotFound();
             }
-
-            var publicacao = await _context.Publicacoes
-                .Include(p => p.Avaliacao)
-                .Include(p => p.Turma)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var publicacao = await _publicacaoRepository.ObterComRelacoesAsync(id.Value);
             if (publicacao == null)
             {
                 return NotFound();
             }
-
             return View(publicacao);
         }
 
@@ -152,15 +159,33 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var publicacao = await _context.Publicacoes.FindAsync(id);
-            _context.Publicacoes.Remove(publicacao);
-            await _context.SaveChangesAsync();
+            await _publicacaoService.ExcluirAsync(id);
+
             return RedirectToAction(nameof(Index));
         }
+    }
+    public class PublicacaoViewModel
+    {
+        //Atributos
+        [Display(Name = "Data de Início")]
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public DateTime? DataInicio { get; set; }
 
-        private bool PublicacaoExists(int id)
-        {
-            return _context.Publicacoes.Any(e => e.Id == id);
-        }
+        [Display(Name = "Data de Fim")]
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public DateTime? DataFim { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public int? Valor { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Avaliação")]
+        public int IdAvaliacao { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Turma")]
+        public IEnumerable<int> Turmas { get; set; }
     }
 }
