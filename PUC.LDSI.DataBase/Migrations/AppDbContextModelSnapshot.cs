@@ -245,15 +245,18 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<DateTime>("CriadoEm");
 
-                    b.Property<DateTime>("DataFim");
+                    b.Property<DateTime?>("DataFim")
+                        .IsRequired();
 
-                    b.Property<DateTime>("DataInicio");
+                    b.Property<DateTime?>("DataInicio")
+                        .IsRequired();
 
                     b.Property<int>("IdAvaliacao");
 
                     b.Property<int>("IdTurma");
 
-                    b.Property<int>("Valor");
+                    b.Property<int?>("Valor")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

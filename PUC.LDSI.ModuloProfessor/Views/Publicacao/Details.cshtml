@@ -1,61 +1,63 @@
 ﻿@model PUC.LDSI.Domain.Entities.Publicacao
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Publicacao</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DataInicio)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataInicio)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DataFim)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataFim)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Avaliacao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Avaliacao.Descricao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Turma)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Turma.Nome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CriadoEm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CriadoEm)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AtualizadoEm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AtualizadoEm)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-card uk-card-default uk-width-1-2@m uk-horizontal-center">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom"> Detalhes da Publicação</h3>
+                    <p class="uk-text-meta uk-margin-remove-top">Última atualização em @Html.DisplayFor(model => model.AtualizadoEm)</p>
+                </div>
+                <div class="uk-card-body">
+                    <ul class="uk-list uk-list-divider">
+                        @*Data de disponibilidade*@
+                        <li>
+                            <span class="uk-text-bold uk-display-block">Disponível em:</span>
+                            De @Html.DisplayFor(model => model.DataInicio) até  @Html.DisplayFor(model => model.DataFim)
+                        </li>
+                        @*Pontuação*@
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Valor)</span>
+                            @Html.DisplayFor(model => model.Valor) Ponto(s)
+                        </li>
+                        @*Dados da prova*@
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Avaliacao)</span>
+                            <ul class="uk-list uk-list-bullet">
+                                <li>
+                                    <b>Matéria:</b> @Html.DisplayFor(model => model.Avaliacao.Materia)
+                                </li>
+                                <li>
+                                    <b>Descrição:</b> @Html.DisplayFor(model => model.Avaliacao.Descricao)
+                                </li>
+                                <li>
+                                    <a asp-controller="Avaliacao" asp-action="Details" asp-route-id="@Model.Avaliacao.Id">Ver mais...</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @*Turma publicada*@
+                        <li>
+                            <span class="uk-text-bold uk-display-block">@Html.DisplayNameFor(model => model.Turma)</span>
+                            @Html.DisplayFor(model => model.Turma.Nome)
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer">
+                    <div class="uk-clearfix">
+                        <div class="uk-float-left">
+                            <a asp-controller="Publicacao" asp-action="Edit" asp-route-id="@Model.Id" class="uk-button uk-button-primary">Editar</a>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-controller="Publicacao" asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

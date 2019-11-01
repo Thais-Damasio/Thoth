@@ -29,12 +29,11 @@ namespace PUC.LDSI.Domain.Services
             return avaliacao.Id;
         }
 
-        public async Task<int> AlterarAvaliacaoAsync(int id, string materia, string descricao, int id_professor, int id_disciplina)
+        public async Task<int> AlterarAvaliacaoAsync(int id, string materia, string descricao, int id_disciplina)
         {
             var avaliacao = await _avaliacaoRepository.ObterAsync(id);
             avaliacao.Materia = materia;
             avaliacao.Descricao = descricao;
-            avaliacao.IdProfessor = id_professor;
             avaliacao.IdDisciplina = id_disciplina;
             avaliacao.AtualizadoEm = DateTime.Now;
             _avaliacaoRepository.Modificar(avaliacao);

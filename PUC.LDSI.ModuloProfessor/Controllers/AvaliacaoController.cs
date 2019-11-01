@@ -113,35 +113,18 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Materia,Descricao,IdDisciplina")] Avaliacao avaliacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Materia,Descricao,IdDisciplina,Id")] Avaliacao avaliacao)
         {
             if (id != avaliacao.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(avaliacao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AvaliacaoExists(avaliacao.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _avaliacaoService.AlterarAvaliacaoAsync(avaliacao.Id, avaliacao.Materia, avaliacao.Descricao, avaliacao.IdDisciplina);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Id", avaliacao.IdDisciplina);
-            ViewData["IdProfessor"] = new SelectList(_context.Professores, "Id", "Id", avaliacao.IdProfessor);
             return View(avaliacao);
         }
 

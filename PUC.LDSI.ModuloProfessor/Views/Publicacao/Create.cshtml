@@ -1,59 +1,73 @@
-﻿@model PUC.LDSI.Domain.Entities.Publicacao
+﻿@model PUC.LDSI.ModuloProfessor.Controllers.PublicacaoViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Publicação";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section uk-padding">
+            <div class="uk-card uk-horizontal-center uk-card-default uk-card-body uk-width-1-2@m uk-width-1-1">
+                <h3 class="uk-card-title">Publicação</h3>
+                <hr />
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="uk-text-danger"></div>
 
-<h2>Create</h2>
+                    @*Avaliação*@
+                    <input asp-for="IdAvaliacao" type="hidden" value="@ViewBag.IdAvaliacao" />
 
-<h4>Publicacao</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DataInicio" class="control-label"></label>
-                <input asp-for="DataInicio" class="form-control" />
-                <span asp-validation-for="DataInicio" class="text-danger"></span>
+                    @*Turma*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="Turmas" class="uk-form-label">Turma</label>
+                            <select multiple="multiple" asp-for="Turmas" class="uk-select" asp-items="ViewBag.IdTurma">
+                                <option value="" disabled>-- Selecione uma turma --</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Turmas" class="uk-text-danger"></span>
+                    </div>
+
+                    @*Data de Início*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="DataInicio" class="uk-form-label">Data de Início</label>
+                            <input asp-for="DataInicio" type="date" class="uk-input" />
+                        </div>
+                        <span asp-validation-for="DataInicio" class="uk-text-danger"></span>
+                    </div>
+
+                    @*Data de Fim*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="DataFim" class="uk-form-label">Data de Fim</label>
+                            <input asp-for="DataFim" type="date" class="uk-input" />
+                        </div>
+                        <span asp-validation-for="DataFim" class="uk-text-danger"></span>
+                    </div>
+
+
+                    @*Valor*@
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <label asp-for="Valor" class="uk-form-label">Valor</label>
+                            <input asp-for="Valor" class="uk-input" placeholder="Valor da avaliação em pontos" />
+                        </div>
+                        <span asp-validation-for="Valor" class="uk-text-danger"></span>
+                    </div>
+
+                    <hr />
+
+                    @*Submit do form*@
+                    <div class="uk-clearfix">
+                        <div class="uk-float-left">
+                            <button class="uk-button uk-button-primary" type="submit">Salvar</button>
+                        </div>
+                        <div class="uk-float-right">
+                            <a asp-controller="Dashboard" asp-action="Index" class="uk-button uk-button-default">Voltar para a lista</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="DataFim" class="control-label"></label>
-                <input asp-for="DataFim" class="form-control" />
-                <span asp-validation-for="DataFim" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Valor" class="control-label"></label>
-                <input asp-for="Valor" class="form-control" />
-                <span asp-validation-for="Valor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdAvaliacao" class="control-label"></label>
-                <select asp-for="IdAvaliacao" class ="form-control" asp-items="ViewBag.IdAvaliacao"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdTurma" class="control-label"></label>
-                <select asp-for="IdTurma" class ="form-control" asp-items="ViewBag.IdTurma"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CriadoEm" class="control-label"></label>
-                <input asp-for="CriadoEm" class="form-control" />
-                <span asp-validation-for="CriadoEm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AtualizadoEm" class="control-label"></label>
-                <input asp-for="AtualizadoEm" class="form-control" />
-                <span asp-validation-for="AtualizadoEm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
