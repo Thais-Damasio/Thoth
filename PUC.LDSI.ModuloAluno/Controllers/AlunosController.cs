@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PUC.LDSI.DataBase.Context;
 using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.ModuloAluno.Controllers
 {
-    public class AlunosController : Controller
+    public class AlunosController : BaseController
     {
         private readonly IAlunoService _alunoService;
 
 
-        public AlunosController(IAlunoService alunoService)
+        public AlunosController(IAlunoService alunoService,
+                                UserManager<Usuario> user):base(user)
         {
             _alunoService = alunoService;
         }
@@ -24,7 +21,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
-            return View( _alunoService.ObterAlunosAsync());
+            return View(_alunoService.ObterAlunosAsync());
         }
 
         // GET: Alunos/Details/5
@@ -58,7 +55,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         {
             if (ModelState.IsValid)
             {
-                _alunoService.IncluirNovoAlunoAsync(aluno);
+                await _alunoService.IncluirNovoAlunoAsync(aluno);
                 return RedirectToAction(nameof(Index));
             }
             return View(aluno);
@@ -96,7 +93,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
             {
                 try
                 {
-                    _alunoService.AlterarAlunoAsync(aluno);
+                    await _alunoService.AlterarAlunoAsync(aluno);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -114,7 +111,8 @@ namespace PUC.LDSI.ModuloAluno.Controllers
             return View(aluno);
         }
 
-        // GET: Alunos/Delete/5
+       
+        // GET: Avaliacao/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -122,7 +120,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
                 return NotFound();
             }
 
-            var aluno = await _alunoService.ObterAlunoDetailsAsync(id.Value);
+            var aluno = await _alunoService.ObterAlunoAsync(id.Value);
             if (aluno == null)
             {
                 return NotFound();
@@ -130,6 +128,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
 
             return View(aluno);
         }
+
 
         // POST: Alunos/Delete/5
         [HttpPost, ActionName("Delete")]

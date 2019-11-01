@@ -24,6 +24,9 @@ namespace PUC.LDSI.Domain.Services
             return await _publicacaoRepository.AdicionarPublicacaoAsync(dataInicio, dataFim, valor, turma, id_avalicao);
         }
 
+
+
+
         public async Task<bool> PublicacaoDisponivel(int idPublicacao)
         {
             var publicacao = await _publicacaoRepository.ObterAsync(idPublicacao);

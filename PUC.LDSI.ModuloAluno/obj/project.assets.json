@@ -12579,11 +12579,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth\\Thoth\\PUC.LDSI.ModuloAluno\\PUC.LDSI.ModuloAluno.csproj",
+      "projectUniqueName": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth-Entrega3\\PUC.LDSI.ModuloAluno\\PUC.LDSI.ModuloAluno.csproj",
       "projectName": "PUC.LDSI.ModuloAluno",
-      "projectPath": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth\\Thoth\\PUC.LDSI.ModuloAluno\\PUC.LDSI.ModuloAluno.csproj",
+      "projectPath": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth-Entrega3\\PUC.LDSI.ModuloAluno\\PUC.LDSI.ModuloAluno.csproj",
       "packagesPath": "C:\\Users\\cecilia.mariar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth\\Thoth\\PUC.LDSI.ModuloAluno\\obj\\",
+      "outputPath": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth-Entrega3\\PUC.LDSI.ModuloAluno\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12602,8 +12602,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth\\Thoth\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj": {
-              "projectPath": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth\\Thoth\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj"
+            "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth-Entrega3\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj": {
+              "projectPath": "C:\\Users\\cecilia.mariar\\source\\repos\\Thoth-Entrega3\\PUC.LDSI.DataBase\\PUC.LDSI.DataBase.csproj"
             }
           }
         }

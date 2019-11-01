@@ -1,0 +1,54 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login - Aluno";
+}
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/homebackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-position-center">
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-header">
+                    <h1 class="uk-card-title">Login</h1>
+                </div>
+                <div class="uk-card-body">
+
+                    <form class="uk-width-large" method="post">
+                        <div asp-validation-summary="All" class="uk-text-danger"></div>
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.Matricula" class="uk-form-icon" uk-icon="icon: mail"></span>
+                                <input asp-for="Input.Matricula" class="uk-input" type="text" placeholder="Usuário" uk-tooltip="title: Matrícula; pos: left">
+                            </div>
+                            <span class="uk-text-danger" asp-validation-for="Input.Matricula"></span>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.Senha" class="uk-form-icon" uk-icon="icon: lock"></span>
+                                <input asp-for="Input.Senha" class="uk-input" type="password" placeholder="Senha" uk-tooltip="title: Senha de acesso; pos: left">
+                            </div>
+                            <span class="uk-text-danger" asp-validation-for="Input.Senha"></span>
+                        </div>
+
+                        <div class="uk-margin">
+                            <a class="uk-link-muted" asp-page="./ForgotPasswordConfirmation">Esqueceu sua senha?</a>
+                            <button class="uk-button uk-button-primary uk-align-center">
+                                Acessar
+                            </button>
+                        </div>
+                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                            <label asp-for="Input.RememberMe">
+                                <input asp-for="Input.RememberMe" class="uk-checkbox" type="checkbox" checked> @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

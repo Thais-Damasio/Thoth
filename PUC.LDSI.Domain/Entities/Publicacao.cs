@@ -14,8 +14,16 @@ namespace PUC.LDSI.Domain.Entities
 
         }
         //Atributos
+        [Display(Name = "Data Inicio")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public DateTime DataInicio { get; set; }
+        [Display(Name = "Data Fim")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+
         public DateTime DataFim { get; set; }
+
+        [Display(Name = "Valor")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int Valor { get; set; }
         [ForeignKey("Avaliacao")]
         public int IdAvaliacao { get; set; }

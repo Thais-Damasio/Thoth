@@ -1,0 +1,73 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/homebackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-position-center">
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-header">
+                    <h1 class="uk-card-title">Cadastro</h1>
+                    <h5>Faça seu cadastro para acessar nossos serviços.</h5>
+                </div>
+                <div class="uk-card-body">
+
+                    <form class="uk-width-large" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="All" class="uk-text-danger"></div>
+
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.Nome" class="uk-form-icon" uk-icon="icon: user"></span>
+                                <input asp-for="Input.Nome" class="uk-input" placeholder="Nome" uk-tooltip="title: Nome de usuário; pos: left" />
+                            </div>
+                            <span asp-validation-for="Input.Nome" class="uk-text-danger"></span>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.Email" class="uk-form-icon" uk-icon="icon: mail"></span>
+                                <input asp-for="Input.Email" class="uk-input" type="text" placeholder="E-mail para comunicação" uk-tooltip="title: E-mail; pos: left">
+                            </div>
+                            <span class="uk-text-danger" asp-validation-for="Input.Email"></span>
+                        </div>
+
+
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.Matricula" class="uk-form-icon" uk-icon="icon: tag"></span>
+                                <input asp-for="Input.Matricula" class="uk-input" type="text" placeholder="Matricula" uk-tooltip="title: Matricula do Aluno; pos: left">
+                            </div>
+                            <span class="uk-text-danger" asp-validation-for="Input.Matricula"></span>
+                        </div>
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.Senha" class="uk-form-icon" uk-icon="icon: lock"></span>
+                                <input asp-for="Input.Senha" class="uk-input" type="password" placeholder="Senha" uk-tooltip="title: Senha de acesso; pos: left">
+                            </div>
+                            <span class="uk-text-danger" asp-validation-for="Input.Senha"></span>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-inline uk-width-1-1">
+                                <span asp-for="Input.ConfirmPassword" class="uk-form-icon" uk-icon="icon: lock"></span>
+                                <input asp-for="Input.ConfirmPassword" class="uk-input" placeholder="Confirmação" uk-tooltip="title: Confirmação da Senha; pos: left" />
+                            </div>
+                            <span asp-validation-for="Input.ConfirmPassword" class="uk-text-danger"></span>
+                        </div>
+                        <div class="uk-margin">
+                            <button class="uk-button uk-button-primary uk-align-center">
+                                Cadastrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

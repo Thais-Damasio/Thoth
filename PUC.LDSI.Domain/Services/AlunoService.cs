@@ -32,9 +32,9 @@ namespace PUC.LDSI.Domain.Services
             return await _alunoRepository.ObterAsync(idAluno);
         }
 
-        public async Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(int idAluno)
+        public async Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(string usuario)
         {
-            return await _alunoRepository.ObterPulicacoesPorAlunoAsync(idAluno);
+            return await _alunoRepository.ObterPulicacoesPorAlunoAsync(int.Parse(usuario));
         }
         /// <summary>
         /// Obtendo todas as publicação para um aluno

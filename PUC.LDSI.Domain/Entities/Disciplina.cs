@@ -11,6 +11,7 @@ namespace PUC.LDSI.Domain.Entities
         //Atributos
         [StringLength(150, ErrorMessage = "O campo {0} deve ter no máximo 150 caracteres")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Display(Name = "Disciplina")]
         public string Nome { get; set; }
 
         //Relacionamentos

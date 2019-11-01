@@ -10,7 +10,7 @@ namespace PUC.LDSI.Domain.Services.Interfaces
         Task<int> IncluirNovoAlunoAsync(Aluno aluno);
         Task<Aluno> ObterAlunoAsync(int idAluno);
         List<Aluno> ObterAlunosAsync();
-        Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(int idAluno);
+        Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(string usuario);
         Task<Aluno> ObterAlunoDetailsAsync(int id);
         Task<int> AlterarAlunoAsync(Aluno aluno);
         Task ExcluirAsync(int id);
