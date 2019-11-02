@@ -26,7 +26,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         // GET: Dashboard
         public async Task<IActionResult> Index()
         {
-            return View(await _AlunoService.ObterPulicacoesPorAlunoAsync(this.LoginUsuario.UserName));
+            return View(await _AlunoService.ObterPulicacoesPorAlunoAsync(this.LoginUsuario.Email));
         }
 
     }

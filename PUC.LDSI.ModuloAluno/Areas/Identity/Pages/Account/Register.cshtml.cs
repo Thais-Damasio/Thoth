@@ -52,11 +52,7 @@ namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
             [Display(Name = "E-mail")]
             public string Email { get; set; }
             
-            [Required(ErrorMessage = "Preencha o campo de {0}")]
-            [Display(Name = "Matrícula")]
-            public int Matricula { get; set; }
-
-            [Required]
+           [Required]
             [StringLength(100, ErrorMessage = "A {0} deve possuir no mínimo {2} e máximo {1} caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
@@ -79,15 +75,14 @@ namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Usuario { UserName = Input.Matricula.ToString(), Email = Input.Email, Tipo = 1, Nome = Input.Nome };
+                var user = new Usuario { UserName = Input.Email, Email = Input.Email, Tipo = 2, Nome = Input.Nome };
                 var result = await _userManager.CreateAsync(user, Input.Senha);
                 if (result.Succeeded)
                 {
                     var aluno = new Aluno()
                     {
-                        Matricula = Input.Matricula,
                         Nome = Input.Nome,
-                        Senha = Input.Senha,
+                        Email = Input.Email,
                         IdTurma = 1
                     };
 

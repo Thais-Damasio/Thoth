@@ -23,11 +23,11 @@ namespace PUC.LDSI.DataBase.Repository
         /// </summary>
         /// <param name="id">Id do aluno</param>
         /// <returns></returns>
-        public async Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(int id)
+        public async Task<List<Publicacao>> ObterPulicacoesPorAlunoAsync(string email)
         {
             var publicacaos = await _context.Alunos
                                             .Include(x => x.Turma).ThenInclude(x => x.Publicacoes)
-                                            .Where(x => x.Id == id)
+                                            .Where(x => x.Email == email)
                                             .Select(a => a.Turma.Publicacoes)
                                             .FirstOrDefaultAsync();
 
@@ -58,7 +58,7 @@ namespace PUC.LDSI.DataBase.Repository
 
         public async Task<Aluno> ObterAlunoComProvasAsync(int id)
         {
-            var alunos = await _context.Alunos
+            var alunos = await _context.Alunos.Where(x=>x.Id == id)
                                             .Include(x => x.Provas)
                                             .FirstOrDefaultAsync();
 
@@ -72,13 +72,13 @@ namespace PUC.LDSI.DataBase.Repository
             return alunos.ToList();
         }
         /// <summary>
-        ///   Login de usuarios alunos é a matricula
+        ///   Login de usuarios alunos é a Email
         /// </summary>
-        /// <param name="login">Matricula do aluno usada no login</param>
+        /// <param name="Email">Email do aluno usada no login</param>
         /// <returns></returns>
-        public Aluno ObterPorLogin(int login)
+        public Aluno ObterPorLogin(string Email)
         {
-            var retorno = this.Consultar(x => x.Matricula == login).FirstOrDefault();
+            var retorno = this.Consultar(x => x.Email == Email).FirstOrDefault();
             return retorno;
         }
     }

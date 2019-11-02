@@ -5,12 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
 <div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
     <div class="uk-height-viewport">
         <div class="uk-section">
@@ -18,14 +12,17 @@
             <div class="uk-overflow-auto uk-margin-right uk-margin-left">
                 <table class="uk-table uk-width-2-3 uk-table-hover uk-table-small uk-table-divider uk-background-muted uk-horizontal-center">
                     <caption>
-                     </caption>
+                    </caption>
                     <thead>
                         <tr>
                             <th class="uk-table-small">
                                 @Html.DisplayNameFor(model => model.Avaliacao.Disciplina.Nome)
                             </th>
                             <th class="uk-table-small">
-                                @Html.DisplayNameFor(model => model.Avaliacao.Materia)
+                                @Html.DisplayNameFor(model =>model.Avaliacao.Disciplina.Nome)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Valor)
                             </th>
                             <th class="uk-table-shrink">
                                 @Html.DisplayNameFor(model => model.DataInicio)
@@ -33,30 +30,33 @@
                             <th class="uk-width-expand">
                                 @Html.DisplayNameFor(model => model.DataFim)
                             </th>
-                            <th class="uk-table-expand">
-                                @Html.DisplayNameFor(model => model.Valor)
-                            </th>
+                            <th class="uk-width-expand">
+                                Situação
                             <th class="uk-table-expand"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.Count() > 0)
+                        @if (Model != null && Model.Count() > 0)
                         {
                             @foreach (var item in Model)
                             {
                                 <tr>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Avaliacao.Disciplina.Nome)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => string.Concat(item.Avaliacao.Disciplina.Nome, item.Avaliacao.Id))
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Valor)
+                                    </td>
                                     <td class="uk-preserve-width">
                                         @Html.DisplayFor(modelItem => item.DataInicio)
                                     </td>
                                     <td class="uk-text-truncate">
                                         @Html.DisplayFor(modelItem => item.DataFim)
                                     </td>
-                                    <td class="uk-preserve-width">
-                                        @Html.DisplayFor(modelItem => item.Avaliacao.Materia)
-                                    </td>
-                                    <td class="uk-preserve-width">
-                                        @Html.DisplayFor(modelItem => item.Valor)
-                                    </td>
+
                                     <td class="uk-preserve-width">
                                         <a asp-controller="Publicao" class="uk-margin-small-right" uk-tooltip="Realizar Prova" asp-action="Edit" asp-route-id="@item.Id" uk-icon="icon: file-edit"></a>
                                         <a asp-controller="Publicao" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>

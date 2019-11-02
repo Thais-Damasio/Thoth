@@ -14,15 +14,15 @@ namespace PUC.LDSI.Domain.Entities
 
         }
         //Atributos
-        [Display(Name = "Data Inicio")]
+        [Display(Name = "Data Abertura")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public DateTime DataInicio { get; set; }
-        [Display(Name = "Data Fim")]
+        [Display(Name = "Data Encerramento")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
 
         public DateTime DataFim { get; set; }
 
-        [Display(Name = "Valor")]
+        [Display(Name = "Pontos")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int Valor { get; set; }
         [ForeignKey("Avaliacao")]
