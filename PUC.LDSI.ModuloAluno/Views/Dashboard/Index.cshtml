@@ -48,9 +48,13 @@
                                         {
                                             <span class="uk-text-success" uk-icon="icon: bookmark"></span>
                                         }
-                                        else if(item.DataInicio > DateTime.Now)
+                                        else if (item.DataInicio > DateTime.Now)
                                         {
                                             <span class="uk-text-primary" uk-icon="icon: bookmark"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="uk-text-danger" uk-icon="icon: bookmark"></span>
                                         }
                                     </td>
                                     <td class="uk-preserve-width">
