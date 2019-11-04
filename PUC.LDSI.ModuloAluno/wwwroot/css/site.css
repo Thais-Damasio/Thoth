@@ -1,0 +1,74 @@
+﻿/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.uk-navbar-nav > li > a:hover {
+    color: #48adf8;
+}
+
+.uk-navbar-nav > li.uk-active > a {
+    color: white !important;
+}
+
+.uk-horizontal-center {
+    margin: 30px auto;
+}
+
+.uk-table-hover tbody tr:hover {
+    background: #aab2cc;
+    color: white !important;
+}
+
+input[type="checkbox"][readonly] {
+    pointer-events: none;
+}
+
+.uk-table-hover tbody tr:hover .no-input {
+    color: white !important;
+}
+
+.uk-text-white {
+    color: white;
+}
+
+a.uk-hover-danger:hover {
+    color: red;
+}
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+.no-input {
+    border: none;
+    display: inline;
+    font-family: inherit;
+    font-size: inherit;
+    width: auto;
+    background: transparent;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+.uk-footer {
+    padding: 10px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}

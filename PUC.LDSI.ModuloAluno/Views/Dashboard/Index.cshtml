@@ -1,0 +1,88 @@
+﻿@model IEnumerable<PUC.LDSI.Domain.Entities.Publicacao>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            <div class="uk-margin-large"></div>
+            <div class="uk-overflow-auto uk-margin-right uk-margin-left">
+                <table class="uk-table uk-width-2-3 uk-table-hover uk-table-small uk-table-divider uk-background-muted uk-horizontal-center">
+                    <caption class="uk-margin-small-bottom">
+                        <span class="uk-text-primary" uk-icon="icon: bookmark"></span> Agendada&nbsp;|
+                        <span class="uk-text-success" uk-icon="icon: bookmark"></span> Disponível
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="uk-table-small">
+                                Status
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Avaliacao.Disciplina)
+                            </th>
+                            <th class="uk-width-expand">
+                                @Html.DisplayNameFor(model => model.Avaliacao.Materia)
+                            </th>
+                            <th class="uk-table-small">
+                                @Html.DisplayNameFor(model => model.Valor)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.DataInicio)
+                            </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.DataFim)
+                            </th>
+                            <th class="uk-table-small"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="uk-table-small">
+                                        @*<span class="@(item.Questoes != null && item.Questoes.Count > 0? "uk-text-success":"uk-text-danger")" uk-icon="icon: bookmark"></span>*@
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Avaliacao.Disciplina.Nome)
+                                    </td>
+                                    <td class="uk-text-truncate">
+                                        @Html.DisplayFor(modelItem => item.Avaliacao.Materia)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.Valor)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.DataInicio)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @Html.DisplayFor(modelItem => item.DataFim)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @*<a asp-controller="Avaliacao" class="uk-margin-small-right" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>
+                                        @if (item.Questoes != null && item.Questoes.Count > 0)
+                                        {
+                                            <a asp-controller="Publicacao" class="uk-margin-small-right" asp-action="Create" asp-route-id="@item.Id" uk-tooltip="Publicar" uk-icon="icon: forward"></a>
+                                        }*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="uk-text-center" colspan="7">
+                                    <img class="uk-display-block uk-align-center" width="60" src="~/images/empty.png" />
+                                    <span class="uk-text-muted">Nenhuma publicação cadastrada ainda.</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

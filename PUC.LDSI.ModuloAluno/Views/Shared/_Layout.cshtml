@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Thoth</title>
-    
+
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.min.js" type='text/javascript'></script>
         <link rel="stylesheet" href="~/lib/uikit/css/uikit.min.css" />
@@ -41,16 +41,7 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="@(routeName == "/Dashboard" || routeName == "/"? "uk-active" : "")">
-                            <a asp-area="" asp-controller="Avaliacao" asp-action="Index">Avaliações</a>
-                        </li>
-                        <li class="@(routeName == "/Publicacao"? "uk-active" : "")">
-                            <a asp-area="" asp-controller="Publicacao" asp-action="Index">Publicações</a>
-                        </li>
-                        <li class="@(routeName == "/Disciplina" ? "uk-active" : "")">
-                            <a asp-area="" asp-controller="Disciplina" asp-action="Index">Disciplinas</a>
-                        </li>
-                        <li class="@(routeName == "/Turma" ? "uk-active" : "")">
-                            <a asp-area="" asp-controller="Turma" asp-action="Index">Turmas</a>
+                            <a asp-area="" asp-controller="Avaliacao" asp-action="Index">Minhas Provas</a>
                         </li>
                         <li>
                             <a href="#">Perfil</a>
@@ -63,7 +54,7 @@
                                             </div>
                                             <div class="uk-width-expand">
                                                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="uk-margin-remove-bottom">@UserManager.GetUserName(User)</a>
-                                                <p class="uk-text-meta uk-margin-remove-top">Professor</p>
+                                                <p class="uk-text-meta uk-margin-remove-top">Aluno</p>
                                             </div>
                                         </div>
                                     </li>
@@ -99,7 +90,7 @@
     <footer>
         <div class="uk-overlay uk-position-fixed uk-position-bottom uk-overlay-primary uk-padding-small">
             @*<partial name="_CookieConsentPartial" />*@
-            <span>&copy; 2019 - Thoth (Professor) | Sistema de Avaliação Acadêmica</span>
+            <span>&copy; 2019 - Thoth (Aluno) | Sistema de Avaliação Acadêmica</span>
         </div>
     </footer>
 

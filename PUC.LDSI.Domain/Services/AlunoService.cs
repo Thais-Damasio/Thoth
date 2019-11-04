@@ -8,5 +8,18 @@ namespace PUC.LDSI.Domain.Services
 {
     public class AlunoService : IAlunoService
     {
+        private readonly IAlunoRepository _alunoRepository;
+        public AlunoService(IAlunoRepository alunoRepository)
+        {
+            _alunoRepository = alunoRepository;
+        }
+
+        public async Task<int> IncluirNovoAlunoAsync(string email, string nome)
+        {
+            var aluno = new Aluno() { Nome = nome, Email = email };
+            _alunoRepository.Adicionar(aluno);
+            await _alunoRepository.SaveChangesAsync();
+            return aluno.Id;
+        }
     }
 }

@@ -94,7 +94,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     AtualizadoEm = table.Column<DateTime>(nullable: false),
                     Nome = table.Column<string>(maxLength: 150, nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    IdTurma = table.Column<int>(nullable: false)
+                    IdTurma = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
