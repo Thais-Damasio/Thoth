@@ -7,6 +7,6 @@ namespace PUC.LDSI.Domain.Services.Interfaces
 {
     public interface IAlunoService
     {
-        Task<int> IncluirNovoAlunoAsync(string email, string nome);
+        Task<int> IncluirNovoAlunoAsync(string email, string nome, int id_turma);
     }
 }

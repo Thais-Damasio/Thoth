@@ -32,7 +32,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<int?>("IdTurma");
+                    b.Property<int>("IdTurma");
 
                     b.Property<string>("Nome")
                         .IsRequired()

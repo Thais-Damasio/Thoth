@@ -2,12 +2,20 @@
 
 @{
     ViewData["Title"] = "Publicação";
+    string error = ViewData["ErrorMessage"] != null ? ViewData["ErrorMessage"].ToString() : "";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
     <div class="uk-height-viewport">
         <div class="uk-section uk-padding">
             <div class="uk-card uk-horizontal-center uk-card-default uk-card-body uk-width-1-2@m uk-width-1-1">
+                @if (error != string.Empty)
+                {
+                    <div class="uk-alert-danger" uk-alert>
+                        <a class="uk-alert-close" uk-close></a>
+                        <p>@error</p>
+                    </div>
+                }
                 <h3 class="uk-card-title">Publicação</h3>
                 <hr />
                 <form asp-action="Create">
@@ -31,7 +39,7 @@
                     <div class="uk-margin">
                         <div class="uk-form-controls">
                             <label asp-for="DataInicio" class="uk-form-label">Data de Início</label>
-                            <input asp-for="DataInicio" type="date" class="uk-input" />
+                            <input asp-for="DataInicio" type="datetime-local" class="uk-input" />
                         </div>
                         <span asp-validation-for="DataInicio" class="uk-text-danger"></span>
                     </div>
@@ -40,7 +48,7 @@
                     <div class="uk-margin">
                         <div class="uk-form-controls">
                             <label asp-for="DataFim" class="uk-form-label">Data de Fim</label>
-                            <input asp-for="DataFim" type="date" class="uk-input" />
+                            <input asp-for="DataFim" type="datetime-local" class="uk-input" />
                         </div>
                         <span asp-validation-for="DataFim" class="uk-text-danger"></span>
                     </div>

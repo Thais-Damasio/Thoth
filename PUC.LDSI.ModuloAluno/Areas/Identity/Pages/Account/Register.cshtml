@@ -19,10 +19,18 @@
 
                         <div class="uk-margin">
                             <div class="uk-inline uk-width-1-1">
-                                <span asp-for="Input.Nome" class="uk-form-icon" uk-icon="icon: user"></span>
+                                <span class="uk-form-icon" uk-icon="icon: user"></span>
                                 <input asp-for="Input.Nome" class="uk-input" placeholder="Nome" uk-tooltip="title: Nome de usuário; pos: left" />
                             </div>
                             <span asp-validation-for="Input.Nome" class="uk-text-danger"></span>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-form-controls">
+                                <label asp-for="Input.IdTurma" class="uk-form-label">Turma</label>
+                                <select asp-for="Input.IdTurma" class="uk-select"asp-items="@(new SelectList(Model.Turmas, "Value", "Text"))"></select>
+                            </div>
+                            <span asp-validation-for="Input.IdTurma" class="uk-text-danger"></span>
                         </div>
 
                         <div class="uk-margin">

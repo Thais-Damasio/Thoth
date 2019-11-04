@@ -16,7 +16,7 @@ namespace PUC.LDSI.Domain.Entities
         [Display(Name = "E-mail")]
         public string Email { get; set; }
         [ForeignKey("Turma")]
-        public int? IdTurma { get; set; }
+        public int IdTurma { get; set; }
         
         //Relacionamentos
         public Turma Turma { get; set; }

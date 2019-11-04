@@ -5,6 +5,6 @@ namespace PUC.LDSI.Domain.Repository
 {
     public interface IAlunoRepository : IRepository<Aluno>
     {
-        Aluno ObterPorLogin(string login);
+        Task<Aluno> ObterPorLogin(string login);
     }
 }

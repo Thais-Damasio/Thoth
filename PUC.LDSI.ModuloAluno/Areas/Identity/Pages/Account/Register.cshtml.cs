@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,8 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using PUC.LDSI.Domain.Entities;
+using PUC.LDSI.Domain.Repository;
 using PUC.LDSI.Domain.Services.Interfaces;
 
 namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
@@ -21,6 +24,7 @@ namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
         private readonly UserManager<Usuario> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ITurmaRepository _turmaRepository;
         private readonly IAlunoService _alunoService;
 
         public RegisterModel(
@@ -28,17 +32,21 @@ namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
             SignInManager<Usuario> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
+            ITurmaRepository turmaRepository,
             IAlunoService alunoService)
         {
             _userManager = userManager;
             _alunoService = alunoService;
             _signInManager = signInManager;
             _logger = logger;
+            _turmaRepository = turmaRepository;
             _emailSender = emailSender;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        public IEnumerable<SelectListItem> Turmas { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -49,26 +57,32 @@ namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
             [Display(Name = "Nome")]
             public string Nome { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
+            [Display(Name = "Turma")]
+            public int IdTurma { get; set; }
+
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} deve conter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Senha { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Senha", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Senha", ErrorMessage = "A senha digitada não corresponde com a senha de confirmação.")]
             public string ConfirmPassword { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            IEnumerable<Turma> availableTurmas = _turmaRepository.ObterTodos();
+            Turmas = availableTurmas.Select(x => new SelectListItem() { Text = x.Nome, Value = x.Id.ToString() }).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -80,7 +94,7 @@ namespace PUC.LDSI.ModuloAluno.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Senha);
                 if (result.Succeeded)
                 {
-                    await _alunoService.IncluirNovoAlunoAsync(user.UserName, user.Nome);
+                    await _alunoService.IncluirNovoAlunoAsync(user.UserName, user.Nome, Input.IdTurma);
 
                     _logger.LogInformation("User created a new account with password.");
 

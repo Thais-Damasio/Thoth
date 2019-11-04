@@ -10,7 +10,7 @@ using PUC.LDSI.DataBase.Context;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191104033543_AppMigration")]
+    [Migration("20191104045218_AppMigration")]
     partial class AppMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<int?>("IdTurma");
+                    b.Property<int>("IdTurma");
 
                     b.Property<string>("Nome")
                         .IsRequired()

@@ -17,18 +17,22 @@ namespace PUC.LDSI.ModuloAluno.Controllers
     public class DashboardController : BaseController
     {
         private readonly IPublicacaoRepository _publicacaoRepository;
+        private readonly IAlunoRepository _alunoRepository;
 
         public DashboardController(
             IPublicacaoRepository avaliacaoRepository,
+            IAlunoRepository alunoRepository,
             UserManager<Usuario> _user) : base(_user)
         {
             _publicacaoRepository = avaliacaoRepository;
+            _alunoRepository = alunoRepository;
         }
 
         // GET: Dashboard
         public async Task<IActionResult> Index()
         {
-            return View(await _publicacaoRepository.ListarComRelacoesAsync());
+            Aluno aluno = await _alunoRepository.ObterPorLogin(LoginUsuario.Email);
+            return View(await _publicacaoRepository.ListarComRelacoesAsync(aluno.IdTurma));
         }
     }
 }

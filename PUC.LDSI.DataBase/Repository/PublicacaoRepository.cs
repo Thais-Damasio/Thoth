@@ -32,5 +32,14 @@ namespace PUC.LDSI.DataBase.Repository
            .ToListAsync();
             return publicacoes;
         }
+
+        public async Task<IEnumerable<Publicacao>> ListarComRelacoesAsync(int id_turma)
+        {
+            var publicacoes = await _context.Publicacoes
+           .Include(p => p.Avaliacao).ThenInclude(a => a.Disciplina)
+           .Where(p => p.IdTurma == id_turma)
+           .ToListAsync();
+            return publicacoes;
+        }
     }
 }

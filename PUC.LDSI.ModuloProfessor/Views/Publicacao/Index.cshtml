@@ -45,10 +45,10 @@
                             {
                                 <tr>
                                     <td class="uk-preserve-width">
-                                        @Html.DisplayFor(modelItem => item.DataInicio)
+                                        @item.DataInicio
                                     </td>
                                     <td class="uk-preserve-width">
-                                        @Html.DisplayFor(modelItem => item.DataFim)
+                                        @item.DataFim
                                     </td>
                                     <td class="uk-preserve-width">
                                         @Html.DisplayFor(modelItem => item.Valor)
@@ -73,7 +73,7 @@
                         else
                         {
                             <tr>
-                                <td class="uk-text-center" colspan="5">
+                                <td class="uk-text-center" colspan="7">
                                     <img class="uk-display-block uk-align-center" width="60" src="~/images/empty.png" />
                                     <span class="uk-text-muted">Nenhuma publicação cadastrada ainda.</span>
                                 </td>
