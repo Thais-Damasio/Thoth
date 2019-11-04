@@ -3,6 +3,8 @@ using PUC.LDSI.Domain.Repository;
 using System;
 using System.Threading.Tasks;
 using PUC.LDSI.DataBase.Context;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace PUC.LDSI.DataBase.Repository
 {
@@ -13,10 +15,12 @@ namespace PUC.LDSI.DataBase.Repository
         {
             _context = context;
         }
-
-        public Aluno ObterPorLogin(string login)
+        public async Task<Aluno> ObterPorLogin(string login)
         {
-            throw new NotImplementedException();
+            var retorno = await _context.Alunos
+                .Where(x => x.Email == login)
+                .FirstOrDefaultAsync();
+            return retorno;
         }
     }
 }

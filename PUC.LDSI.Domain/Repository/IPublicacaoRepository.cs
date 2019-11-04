@@ -7,5 +7,7 @@ namespace PUC.LDSI.Domain.Repository
     public interface IPublicacaoRepository : IRepository<Publicacao>
     {
         Task<Publicacao> ObterComRelacoesAsync(int id);
+        Task<IEnumerable<Publicacao>> ListarComRelacoesAsync();
+        Task<IEnumerable<Publicacao>> ListarComRelacoesAsync(int id_turma);
     }
 }

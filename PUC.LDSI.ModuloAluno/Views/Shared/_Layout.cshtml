@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PUC.LDSI.Domain.Entities
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+@{
+    var routeName = Url.Action();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Thoth</title>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js" type='text/javascript'></script>
+        <link rel="stylesheet" href="~/lib/uikit/css/uikit.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="~/lib/uikit/js/uikit.min.js"></script>
+        <script src="~/lib/uikit/js/uikit-icons.min.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <link rel="stylesheet" href="~/lib/uikit/css/uikit.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <script src="~/lib/uikit/js/uikit.min.js" asp-append-version="true"></script>
+        <script src="~/lib/uikit/js/uikit-icons.min.js" asp-append-version="true"></script>
+    </environment>
+</head>
+<body>
+    <div class="uk-position-top">
+        <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="@(routeName == "/Dashboard" || routeName == "/"? "uk-active" : "")">
+                            <a asp-area="" asp-controller="Avaliacao" asp-action="Index">Minhas Provas</a>
+                        </li>
+                        <li>
+                            <a href="#">Perfil</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li class="uk-active">
+                                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                            <div class="uk-width-auto">
+                                                <img src="~/images/avatar.png" class="uk-border-circle" width="40" height="40">
+                                            </div>
+                                            <div class="uk-width-expand">
+                                                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="uk-margin-remove-bottom">@UserManager.GetUserName(User)</a>
+                                                <p class="uk-text-meta uk-margin-remove-top">Aluno</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li>
+                                        <form class="uk-text-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm">
+                                            <button type="submit" class="uk-button uk-button-link">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="@(routeName == "/" ? "uk-active" : "")">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"> Home</a>
+                        </li>
+                        <li class="@(routeName == "/Identity/Account/Register" ? "uk-active" : "")">
+                            <a asp-area="Identity" asp-page="/Account/Register">Cadastro</a>
+                        </li>
+                        <li class="@(routeName == "/Identity/Account/Login" ? "uk-active" : "")">
+                            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    @RenderBody()
+
+    <footer>
+        <div class="uk-overlay uk-position-fixed uk-position-bottom uk-overlay-primary uk-padding-small">
+            @*<partial name="_CookieConsentPartial" />*@
+            <span>&copy; 2019 - Thoth (Aluno) | Sistema de Avaliação Acadêmica</span>
+        </div>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

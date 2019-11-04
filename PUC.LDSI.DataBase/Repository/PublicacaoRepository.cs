@@ -4,6 +4,7 @@ using PUC.LDSI.Domain.Entities;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace PUC.LDSI.DataBase.Repository
 {
@@ -15,7 +16,6 @@ namespace PUC.LDSI.DataBase.Repository
             _context = context;
         }
 
-
         public async Task<Publicacao> ObterComRelacoesAsync(int id)
         {
             var publicacao = await _context.Publicacoes
@@ -23,6 +23,23 @@ namespace PUC.LDSI.DataBase.Repository
                .Include(t => t.Turma)
                .Where(x => x.Id == id).FirstOrDefaultAsync();
             return publicacao;
+        }
+
+        public async Task<IEnumerable<Publicacao>> ListarComRelacoesAsync()
+        {
+            var publicacoes = await _context.Publicacoes
+           .Include(p => p.Avaliacao).ThenInclude(a => a.Disciplina)
+           .ToListAsync();
+            return publicacoes;
+        }
+
+        public async Task<IEnumerable<Publicacao>> ListarComRelacoesAsync(int id_turma)
+        {
+            var publicacoes = await _context.Publicacoes
+           .Include(p => p.Avaliacao).ThenInclude(a => a.Disciplina)
+           .Where(p => p.IdTurma == id_turma)
+           .ToListAsync();
+            return publicacoes;
         }
     }
 }

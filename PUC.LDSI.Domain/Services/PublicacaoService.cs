@@ -32,6 +32,11 @@ namespace PUC.LDSI.Domain.Services
                 CriadoEm = DateTime.Now,
                 AtualizadoEm = DateTime.Now
             };
+            if (dataInicio > dataFim)
+                throw new Exception("A datae hora de início não pode ser maior que a datae hora de fim!");
+            if (dataInicio == dataFim)
+                throw new Exception("A data e hora de início não pode ser igual a data e hora de fim!");
+
             var avaliacao = await _avaliacaoRepository.ObterComRelacoesAsync(publicacao.IdAvaliacao);
             if (avaliacao.Questoes == null || avaliacao.Questoes.Count <= 0)
                 throw new Exception("Para ser publicada uma avaliação deve conter ao menos 1 questão!");
@@ -46,6 +51,10 @@ namespace PUC.LDSI.Domain.Services
             var avaliacao = await _avaliacaoRepository.ObterComRelacoesAsync(idAvaliacao);
             if (avaliacao.Questoes == null || avaliacao.Questoes.Count <= 0)
                 throw new Exception("Para ser publicada uma avaliação deve conter ao menos 1 questão!");
+            if (dataInicio > dataFim)
+                throw new Exception("A data e hora de início não pode ser maior que a data e hora de fim!");
+            if (dataInicio == dataFim)
+                throw new Exception("A data e hora de início não pode ser igual a data e hora de fim!");
 
             foreach (int id in idTurma)
             {
@@ -59,6 +68,7 @@ namespace PUC.LDSI.Domain.Services
                     CriadoEm = DateTime.Now,
                     AtualizadoEm = DateTime.Now
                 };
+
                 _publicacaoRepository.Adicionar(publicacao);
                 await _publicacaoRepository.SaveChangesAsync();
             }

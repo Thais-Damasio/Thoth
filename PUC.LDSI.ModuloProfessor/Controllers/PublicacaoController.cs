@@ -91,15 +91,26 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Valor,IdAvaliacao,Turmas")] PublicacaoViewModel publicacao)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _publicacaoService.IncluirNovaPublicacaoAsync(
-                    publicacao.DataInicio.Value, publicacao.DataFim.Value, publicacao.Valor.Value, publicacao.IdAvaliacao, publicacao.Turmas);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await _publicacaoService.IncluirNovaPublicacaoAsync(
+                        publicacao.DataInicio.Value, publicacao.DataFim.Value, publicacao.Valor.Value, publicacao.IdAvaliacao, publicacao.Turmas);
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdAvaliacao"] = publicacao.IdAvaliacao;
+                ViewData["IdTurma"] = new MultiSelectList(await _turmaRepository.ObterTurmasNaoPublicadas(publicacao.IdAvaliacao), "Id", "Nome");
+                return View(publicacao);
             }
-            ViewData["IdAvaliacao"] = publicacao.IdAvaliacao;
-            ViewData["IdTurma"] = new MultiSelectList(await _turmaRepository.ObterTurmasNaoPublicadas(publicacao.IdAvaliacao), "Id", "Nome");
-            return View(publicacao);
+            catch(Exception e)
+            {
+                ViewData["ErrorMessage"] = e.Message;
+                ViewData["IdAvaliacao"] = publicacao.IdAvaliacao;
+                ViewData["IdTurma"] = new MultiSelectList(await _turmaRepository.ObterTurmasNaoPublicadas(publicacao.IdAvaliacao), "Id", "Nome");
+                return View(publicacao);
+
+            }
         }
 
         // GET: Publicacao/Edit/5
