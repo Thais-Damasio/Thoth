@@ -4,7 +4,7 @@
 Thoth é um sistema WEB que implementa funcionaliaddes para sustentar um ambiente EAD (Ensino a Distância). Ele visa permitir que
 professores possam cadastrar e publicar suas avaliações para que os alunos possam realiza-las por meio da plataforma.
 Nossa solução busca integrar em as seguintes funções:
-- Cadastro de Aluno e Professores
+- Cadastro de Alunos e Professores
 - Cadastrar Provas de múltipla escolha ou de questões como "verdadeiro ou falso"
 - Publicar as avaliações cadastradas
 - Permitir que alunos realizem as avaliações cadastradas
