@@ -21,5 +21,10 @@ namespace PUC.LDSI.Domain.Services
             await _alunoRepository.SaveChangesAsync();
             return aluno.Id;
         }
+
+        public async Task<Aluno> BuscarPorEmail(string email)
+        {
+            return await _alunoRepository.ObterPorLogin(email);
+        }
     }
 }

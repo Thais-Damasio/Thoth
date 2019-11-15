@@ -3,15 +3,18 @@ using PUC.LDSI.Domain.Repository;
 using System.Threading.Tasks;
 using System;
 using PUC.LDSI.Domain.Entities;
+using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Services
 {
     public class AvaliacaoService : IAvaliacaoService
     {
         private readonly IAvaliacaoRepository _avaliacaoRepository;
-        public AvaliacaoService(IAvaliacaoRepository avaliacaoRepository)
+        private readonly IAvaliacaoQuestaoRepository _avaliacaoQuestaoRepository;
+        public AvaliacaoService(IAvaliacaoRepository avaliacaoRepository, IAvaliacaoQuestaoRepository avaliacaoQuestaoRepository)
         {
             _avaliacaoRepository = avaliacaoRepository;
+            _avaliacaoQuestaoRepository = avaliacaoQuestaoRepository;
         }
 
         public async Task<int> AdicionarAvaliacaoAsync(string materia, string descricao, int id_professor, int id_disciplina)
@@ -47,6 +50,18 @@ namespace PUC.LDSI.Domain.Services
                 throw new Exception("Não é possível excluir uma avaliação que já foi publicada!");
             _avaliacaoRepository.Remover(id);
             await _avaliacaoRepository.SaveChangesAsync();
+        }
+
+        public async Task<IList<AvaliacaoQuestao>> ObterAvaliacaoQuestaoAsync(int idAvaliacao)
+        {
+            var avaliacao = await _avaliacaoQuestaoRepository.ObterComRelacoesAsync(idAvaliacao);
+            return avaliacao;
+        }
+
+        public async Task<Avaliacao> ObterComRelacoesAsync(int id)
+        {
+            var avaliacao = await _avaliacaoRepository.ObterComRelacoesAsync(id);
+            return avaliacao;
         }
     }
 }
