@@ -12,7 +12,7 @@ namespace PUC.LDSI.Domain.Services
         public AlunoService(IAlunoRepository alunoRepository)
         {
             _alunoRepository = alunoRepository;
-        }
+        }  
 
         public async Task<int> IncluirNovoAlunoAsync(string email, string nome, int id_turma)
         {
