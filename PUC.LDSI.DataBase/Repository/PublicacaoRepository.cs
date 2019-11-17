@@ -21,6 +21,7 @@ namespace PUC.LDSI.DataBase.Repository
             var publicacao = await _context.Publicacoes
                .Include(a => a.Avaliacao)
                .Include(t => t.Turma)
+               .ThenInclude(t => t.Alunos)
                .Where(x => x.Id == id).FirstOrDefaultAsync();
             return publicacao;
         }

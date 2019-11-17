@@ -11,8 +11,8 @@ namespace PUC.LDSI.Domain.Services
         private readonly IAlunoRepository _alunoRepository;
         public AlunoService(IAlunoRepository alunoRepository)
         {
-            _alunoRepository = alunoRepository;
-        }
+            _alunoRepository = alunoRepository; 
+        }  
 
         public async Task<int> IncluirNovoAlunoAsync(string email, string nome, int id_turma)
         {
@@ -20,6 +20,11 @@ namespace PUC.LDSI.Domain.Services
             _alunoRepository.Adicionar(aluno);
             await _alunoRepository.SaveChangesAsync();
             return aluno.Id;
+        }
+
+        public async Task<Aluno> BuscarPorEmail(string email)
+        {
+            return await _alunoRepository.ObterPorLogin(email);
         }
     }
 }
