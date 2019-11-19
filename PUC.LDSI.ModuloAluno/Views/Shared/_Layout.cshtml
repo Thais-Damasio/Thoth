@@ -41,7 +41,10 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="@(routeName == "/Dashboard" || routeName == "/"? "uk-active" : "")">
-                            <a asp-area="" asp-controller="Dashboard" asp-action="Index">Minhas Provas</a>
+                            <a asp-area="" asp-controller="Dashboard" asp-action="Index">Publicacações</a>
+                        </li>
+                        <li class="@(routeName == "/Prova" || routeName == "/"? "uk-active" : "")">
+                            <a asp-area="" asp-controller="Prova" asp-action="Index">Minhas Provas</a>
                         </li>
                         <li>
                             <a href="#">Perfil</a>

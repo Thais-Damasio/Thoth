@@ -18,11 +18,11 @@ namespace PUC.LDSI.DataBase.Repository
 
         public async Task<IList<ProvaOpcao>> ObterPorQuestaoProvaAsync(int IdProvaQuestao)
         {
-            var provaOpcao = _context.ProvaOpcoes
+            var provaOpcao = await _context.ProvaOpcoes
                 .Where(x => x.IdQuestaoProva == IdProvaQuestao)
                 .Include(x => x.ProvaQuestao)
                 .Include(x => x.AvaliacaoOpcao)
-                .ToList();
+                .ToListAsync();
             return provaOpcao;
             
         }

@@ -18,7 +18,7 @@ namespace PUC.LDSI.Domain.Entities
         //Relacionamentos
         public AvaliacaoQuestao AvaliacaoQuestao { get; set; }
         public Prova Prova { get; set; }
-        public List<ProvaOpcao> Opcao { get; set; }
+        public List<ProvaOpcao> Opcoes { get; set; }
 
     }
 }

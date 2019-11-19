@@ -19,7 +19,7 @@ namespace PUC.LDSI.DataBase.Repository
         public async Task<Publicacao> ObterComRelacoesAsync(int id)
         {
             var publicacao = await _context.Publicacoes
-               .Include(a => a.Avaliacao)
+               .Include(a => a.Avaliacao).ThenInclude(a => a.Questoes).ThenInclude(q => q.Opcoes)
                .Include(t => t.Turma)
                .ThenInclude(t => t.Alunos)
                .Where(x => x.Id == id).FirstOrDefaultAsync();

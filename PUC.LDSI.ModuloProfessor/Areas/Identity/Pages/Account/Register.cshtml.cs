@@ -53,7 +53,7 @@ namespace PUC.LDSI.ModuloProfessor.Areas.Identity.Pages.Account
             [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Preencha o campo de {0}")]
             [StringLength(100, ErrorMessage = "A {0} deve possuir no mínimo {2} e máximo {1} caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]

@@ -1,0 +1,132 @@
+﻿@model PUC.LDSI.Domain.QueryResult.ProvaQueryResult
+
+@{
+    ViewData["Title"] = "Prova";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .validation-summary-errors ul li:nth-child(1n+2) {
+        display: none;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('input[type=radio]').change(function (event) {
+            // When any radio button on the page is selected,
+            // then deselect all other radio buttons.
+            let id = event.target.id;
+            $('input[id=' + id + ']:checked').not(this).prop('checked', false);
+            $('input[id=' + id + '_Completa]').val(true);
+        });
+    })
+</script>
+
+<div class="uk-background-cover uk-background-blend-soft-light uk-background-secondary" style="background-image: url(@Url.Content("~/images/dashboardbackground.jpg"))">
+    <div class="uk-height-viewport">
+        <div class="uk-section">
+            @*Título da prova*@
+            <div class="uk-card-header">
+                <div class="uk-width-expand">
+                    <h3 class="uk-card-title uk-text-primary uk-margin-remove-bottom">@Model.Avaliacao.Materia</h3>
+                    <p class="uk-text-muted uk-margin-remove-top uk-margin-small-bottom">@Model.Avaliacao.Descricao</p>
+                    <div asp-validation-summary="All" class="uk-text-danger uk-background-secondary uk-border-rounded"></div>
+                </div>
+            </div>
+
+            @*Questões da prova*@
+            <div uk-slider="finite: true">
+
+                <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
+
+                    <form asp-controller="Prova" asp-action="SalvarProva">
+                        <input type="hidden" asp-for="AvaliacaoId" value="@Model.AvaliacaoId" />
+                        <input type="hidden" asp-for="PublicacaoId" value="@Model.PublicacaoId" />
+
+                        <ul class="uk-slider-items uk-child-width-1-1">
+                            @for (int i = 0; i < Model.Questoes.Count; i++)
+                            {
+                                <li>
+                                    @*Pergunta*@
+                                    <input type="hidden" asp-for="Questoes[i].QuestaoId" value="@Model.Questoes[i].QuestaoId" />
+
+                                    <div class="uk-align-center uk-margin-remove-top uk-width-2-3@m uk-width-3-4">
+                                        <div class="uk-card uk-card-default">
+                                            <div class="uk-card-body">
+                                                <small class="uk-text-success uk-background-muted uk-display-block">@(Model.Questoes[i].Tipo == 1 ? "Múltipla Escolha" : "Verdadeiro ou Falso")</small>
+                                                <h3 class="uk-card-title uk-margin-remove-top"> @(i + 1)) @Model.Questoes[i].Enunciado</h3>
+
+                                                @*Completa ou não*@
+                                                @if (Model.Questoes[i].Tipo == 1)
+                                                {
+                                                    <input type="hidden" id="@(Model.Questoes[i].QuestaoId)_Completa" asp-for="@Model.Questoes[i].Completa" value="@Model.Questoes[i].Completa" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="hidden" asp-for="@Model.Questoes[i].Completa" value="@true" />
+                                                }
+                                                @*Questão*@
+                                                @for (int j = 0; j < Model.Questoes[i].Opcoes.Count; j++)
+                                                {
+                                                    <ul class="uk-list">
+                                                        @*Opções das questões*@
+                                                        <li class="uk-list">
+                                                            @if (Model.Questoes[i].Tipo == 1)
+                                                            {
+                                                                <input type="hidden" asp-for="Questoes[i].Opcoes[j].OpcaoAvaliacaoId" value="@Model.Questoes[i].Opcoes[j].OpcaoAvaliacaoId" />
+                                                                <label><input class="uk-radio" type="radio" id="@Model.Questoes[i].QuestaoId" asp-for="@Model.Questoes[i].Opcoes[j].Resposta" value="@true">&emsp;@Model.Questoes[i].Opcoes[j].Descricao</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="hidden" asp-for="Questoes[i].Opcoes[j].OpcaoAvaliacaoId" value="@Model.Questoes[i].Opcoes[j].OpcaoAvaliacaoId" />
+                                                                <label><input class="uk-checkbox" type="checkbox" asp-for="@Model.Questoes[i].Opcoes[j].Resposta" value="@true">&emsp;@Model.Questoes[i].Opcoes[j].Descricao</label>
+                                                            }
+                                                        </li>
+                                                    </ul>
+                                                }
+                                            </div>
+                                            @*Botões de navegação*@
+                                            @if (Model.Questoes.Count == (i + 1))
+                                            {
+                                                <div class="uk-card-footer">
+                                                    <div class="uk-clearfix">
+                                                        <div class="uk-float-left">
+                                                            <a uk-slider-item="previous" class="uk-button uk-button-default">Anterior</a>
+                                                        </div>
+                                                        <div class="uk-float-right">
+                                                            <button type="submit" class="uk-button uk-button-danger">Enviar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="uk-card-footer">
+                                                    <div class="uk-clearfix">
+                                                        <div class="uk-float-left">
+                                                            <a uk-slider-item="previous" class="uk-button uk-button-default">Anterior</a>
+                                                        </div>
+                                                        <div class="uk-float-right">
+                                                            <a uk-slider-item="next" class="uk-button uk-button-primary">Próxima</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </form>
+
+                    <a class="uk-position-center-left uk-position-small" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                    <a class="uk-position-center-right uk-position-small" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+                </div>
+                <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

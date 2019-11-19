@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.DataBase.Context;
 using PUC.LDSI.Domain.Entities;
+using PUC.LDSI.Domain.QueryResult;
 using PUC.LDSI.Domain.Services.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         private readonly IProvaService _ProvaService;
         private readonly IAlunoService _AlunoService;
         private readonly IAvaliacaoService _AvalicaoService;
-        private AppDbContext _context;
 
         public ProvaController(
             AppDbContext context,
@@ -29,38 +29,44 @@ namespace PUC.LDSI.ModuloAluno.Controllers
             _AvalicaoService = avaliacaoService;
         }
 
-        // GET: Avaliacao
-        public IActionResult Index()
+        // GET: Prova
+        public async Task<IActionResult> Index()
         {
-            return RedirectToAction("Index", "Dashboard");
+            //var aluno = await _provaService.ObterPorLogin(LoginUsuario.Email);
+            return View(await _ProvaService.ObterProvasComRelacoes(LoginUsuario.Email));
         }
 
-        // GET: Avaliacao/Create
-        public IActionResult Create()
+        // GET: Prova/FazerProva
+        public async Task<IActionResult> FazerProva(int id)
         {
-            return View();
+            var prova = await _ProvaService.ObterProvaAsync(id, LoginUsuario.Email);
+
+            return View("Prova", prova);
         }
 
-        // POST: Avaliacao/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProva([Bind("IdAluno,IdAvaliacao")] Prova prova)
+        public async Task<IActionResult> SalvarProva([Bind("AvaliacaoId,PublicacaoId,Questoes")] ProvaQueryResult prova)
         {
             if (ModelState.IsValid)
             {
-                var aluno = _AlunoService.BuscarPorEmail(LoginUsuario.Email);
-                prova.IdAluno = aluno.Id;
-                
-                int id_Prova = await _ProvaService.IncluirNovaProvaAsync(prova.IdAvaliacao, prova.IdAvaliacao, prova.IdAluno);
-
-                return RedirectToAction(nameof(EditQuestaoProva), new { id = id_Prova });
+                await _ProvaService.SalvarProvaAsync(prova, LoginUsuario.Email);
+                return RedirectToAction(nameof(Index));
             }
-            return View(prova);
+            ProvaQueryResult provaBd = await _ProvaService.ObterProvaAsync(prova.PublicacaoId, LoginUsuario.Email);
+            for (int i = 0; i < prova.Questoes.Count; i++)
+            {
+                provaBd.Questoes[i].Completa = prova.Questoes[i].Completa;
+                for (int j = 0; j < prova.Questoes[i].Opcoes.Count; j++)
+                {
+                    provaBd.Questoes[i].Opcoes[j].Resposta = prova.Questoes[i].Opcoes[j].Resposta;
+                }
+            }
+            return View("Prova", provaBd);
         }
 
-
+        // Teste
         // POST: Avaliacao/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -109,7 +115,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 int id_ProvaOpacao = await _ProvaService.IncluirNovaProvaOpcaoAsync(opcao.IdAvaliacaoOpcao, opcao.IdQuestaoProva, opcao.Resposta);
 
                 return RedirectToAction(nameof(EditProvaOpcao), new { id = id_ProvaOpacao });

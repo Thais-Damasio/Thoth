@@ -17,10 +17,15 @@ namespace PUC.LDSI.Domain.Entities
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Display(Name = "Avaliação")]
         public int IdAvaliacao { get; set; }
+        [Display(Name = "Publicacação")]
+        [ForeignKey("Publicacao")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public int IdPublicacao { get; set; }
 
         //Relacionamentos
         public Aluno Aluno { get; set; }
         public Avaliacao Avaliacao { get; set; }
+        public Publicacao Publicacao { get; set; }
         public List<ProvaQuestao> Questoes { get; set; }
 
 

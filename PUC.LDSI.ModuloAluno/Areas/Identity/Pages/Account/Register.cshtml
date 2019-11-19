@@ -9,10 +9,10 @@
         <div class="uk-position-center">
             <div class="uk-card uk-card-default">
                 <div class="uk-card-header">
-                    <h1 class="uk-card-title">Cadastro</h1>
-                    <h5>Faça seu cadastro para acessar nossos serviços.</h5>
+                    <h1 class="uk-card-title uk-margin-small-bottom">Cadastro</h1>
+                    <h5 class="uk-margin-remove-top">Faça seu cadastro para acessar nossos serviços.</h5>
                 </div>
-                <div class="uk-card-body">
+                <div class="uk-card-body uk-padding-remove-top uk-padding-remove-bottom">
 
                     <form class="uk-width-large" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         <div asp-validation-summary="All" class="uk-text-danger"></div>
@@ -28,7 +28,7 @@
                         <div class="uk-margin">
                             <div class="uk-form-controls">
                                 <label asp-for="Input.IdTurma" class="uk-form-label">Turma</label>
-                                <select asp-for="Input.IdTurma" class="uk-select"asp-items="@(new SelectList(Model.Turmas, "Value", "Text"))"></select>
+                                <select asp-for="Input.IdTurma" class="uk-select" asp-items="@(new SelectList(Model.Turmas, "Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="Input.IdTurma" class="uk-text-danger"></span>
                         </div>

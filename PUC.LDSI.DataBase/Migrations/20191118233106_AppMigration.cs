@@ -162,34 +162,6 @@ namespace PUC.LDSI.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Provas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(nullable: false),
-                    IdAluno = table.Column<int>(nullable: false),
-                    IdAvaliacao = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Provas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Provas_Alunos_IdAluno",
-                        column: x => x.IdAluno,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Provas_Avaliacoes_IdAvaliacao",
-                        column: x => x.IdAvaliacao,
-                        principalTable: "Avaliacoes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AvaliacaoOpcoes",
                 columns: table => new
                 {
@@ -210,6 +182,41 @@ namespace PUC.LDSI.DataBase.Migrations
                         principalTable: "AvaliacaoQuestoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Provas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(nullable: false),
+                    IdAluno = table.Column<int>(nullable: false),
+                    IdAvaliacao = table.Column<int>(nullable: false),
+                    IdPublicacao = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Provas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Provas_Alunos_IdAluno",
+                        column: x => x.IdAluno,
+                        principalTable: "Alunos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Provas_Avaliacoes_IdAvaliacao",
+                        column: x => x.IdAvaliacao,
+                        principalTable: "Avaliacoes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Provas_Publicacoes_IdPublicacao",
+                        column: x => x.IdPublicacao,
+                        principalTable: "Publicacoes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -326,6 +333,11 @@ namespace PUC.LDSI.DataBase.Migrations
                 column: "IdAvaliacao");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Provas_IdPublicacao",
+                table: "Provas",
+                column: "IdPublicacao");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Publicacoes_IdAvaliacao",
                 table: "Publicacoes",
                 column: "IdAvaliacao");
@@ -342,9 +354,6 @@ namespace PUC.LDSI.DataBase.Migrations
                 name: "ProvaOpcoes");
 
             migrationBuilder.DropTable(
-                name: "Publicacoes");
-
-            migrationBuilder.DropTable(
                 name: "AvaliacaoOpcoes");
 
             migrationBuilder.DropTable(
@@ -358,6 +367,9 @@ namespace PUC.LDSI.DataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "Alunos");
+
+            migrationBuilder.DropTable(
+                name: "Publicacoes");
 
             migrationBuilder.DropTable(
                 name: "Avaliacoes");

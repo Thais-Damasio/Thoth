@@ -176,11 +176,15 @@ namespace PUC.LDSI.DataBase.Migrations
 
                     b.Property<int>("IdAvaliacao");
 
+                    b.Property<int>("IdPublicacao");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdAluno");
 
                     b.HasIndex("IdAvaliacao");
+
+                    b.HasIndex("IdPublicacao");
 
                     b.ToTable("Provas");
                 });
@@ -333,6 +337,11 @@ namespace PUC.LDSI.DataBase.Migrations
                         .WithMany("Provas")
                         .HasForeignKey("IdAvaliacao")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PUC.LDSI.Domain.Entities.Publicacao", "Publicacao")
+                        .WithMany()
+                        .HasForeignKey("IdPublicacao")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("PUC.LDSI.Domain.Entities.ProvaOpcao", b =>
@@ -343,7 +352,7 @@ namespace PUC.LDSI.DataBase.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("PUC.LDSI.Domain.Entities.ProvaQuestao", "ProvaQuestao")
-                        .WithMany("Opcao")
+                        .WithMany("Opcoes")
                         .HasForeignKey("IdQuestaoProva")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

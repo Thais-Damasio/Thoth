@@ -23,7 +23,7 @@ namespace PUC.LDSI.DataBase.Repository
                                             .Where(e => e.Id == idProvaQuestao)
                                             .Include(a => a.AvaliacaoQuestao)
                                             .ThenInclude(a => a.Opcoes)
-                                            .Include(a => a.Opcao)
+                                            .Include(a => a.Opcoes)
 
                                             .FirstOrDefaultAsync();
             return provaQuestao;

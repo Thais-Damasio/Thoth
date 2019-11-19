@@ -73,11 +73,11 @@
                                         @item.DataFim
                                     </td>
                                     <td class="uk-preserve-width">
-                                        @*<a asp-controller="Avaliacao" class="uk-margin-small-right" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>
-                                        @if (item.Questoes != null && item.Questoes.Count > 0)
+                                        @*<a asp-controller="Avaliacao" class="uk-margin-small-right" asp-action="Details" uk-tooltip="Visualizar" asp-route-id="@item.Id" uk-icon="icon: more-vertical"></a>*@
+                                        @if (item.DataInicio <= DateTime.Now && item.DataFim >= DateTime.Now)
                                         {
-                                            <a asp-controller="Publicacao" class="uk-margin-small-right" asp-action="Create" asp-route-id="@item.Id" uk-tooltip="Publicar" uk-icon="icon: forward"></a>
-                                        }*@
+                                            <a asp-controller="Prova" class="uk-margin-small-right" asp-action="FazerProva" asp-route-id="@item.Id" uk-tooltip="Fazer Prova" uk-icon="icon: forward"></a>
+                                        }
                                     </td>
                                 </tr>
                             }
