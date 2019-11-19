@@ -17,12 +17,13 @@ namespace PUC.LDSI.DataBase.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Avaliacao>> ListarComRelacoesAsync()
+        public async Task<IEnumerable<Avaliacao>> ListarComRelacoesAsync(int id_professor)
         {
             var avaliacoes = await _context.Avaliacoes
            .Include(p => p.Professor)
            .Include(d => d.Disciplina)
            .Include(q => q.Questoes)
+           .Where(p => p.IdProfessor == id_professor)
            .ToListAsync();
             return avaliacoes;
         }

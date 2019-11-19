@@ -1,4 +1,5 @@
-﻿using PUC.LDSI.DataBase.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using PUC.LDSI.DataBase.Context;
 using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Repository;
 using System.Linq;
@@ -13,10 +14,11 @@ namespace PUC.LDSI.DataBase.Repository
         {
             _context = context;
         }
-        public Professor ObterPorLogin(string login)
+        public async Task<Professor> ObterPorLogin(string login)
         {
-            var retorno = _context.Professores
-           .Where(x => x.Email == login).FirstOrDefault();
+            var retorno = await _context.Professores
+           .Where(x => x.Email == login)
+           .FirstOrDefaultAsync();
             return retorno;
         }
     }

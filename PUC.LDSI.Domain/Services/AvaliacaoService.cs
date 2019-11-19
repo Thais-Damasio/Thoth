@@ -10,11 +10,25 @@ namespace PUC.LDSI.Domain.Services
     public class AvaliacaoService : IAvaliacaoService
     {
         private readonly IAvaliacaoRepository _avaliacaoRepository;
+        private readonly IProfessorRepository _professorRepository;
         private readonly IAvaliacaoQuestaoRepository _avaliacaoQuestaoRepository;
-        public AvaliacaoService(IAvaliacaoRepository avaliacaoRepository, IAvaliacaoQuestaoRepository avaliacaoQuestaoRepository)
+        public AvaliacaoService(
+            IAvaliacaoRepository avaliacaoRepository,
+            IAvaliacaoQuestaoRepository avaliacaoQuestaoRepository,
+            IProfessorRepository professorRepository)
         {
             _avaliacaoRepository = avaliacaoRepository;
             _avaliacaoQuestaoRepository = avaliacaoQuestaoRepository;
+            _professorRepository = professorRepository;
+        }
+        public async Task<IEnumerable<Avaliacao>> ListarComRelacoesAsync(string email)
+        {
+            Professor professor = await _professorRepository.ObterPorLogin(email);
+
+            if (professor == null)
+                throw new Exception("Professor não encontrado");
+
+            return await _avaliacaoRepository.ListarComRelacoesAsync(professor.Id);
         }
 
         public async Task<int> AdicionarAvaliacaoAsync(string materia, string descricao, int id_professor, int id_disciplina)

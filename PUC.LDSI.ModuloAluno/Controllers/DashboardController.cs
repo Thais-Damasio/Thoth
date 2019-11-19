@@ -32,7 +32,7 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         public async Task<IActionResult> Index()
         {
             Aluno aluno = await _alunoRepository.ObterPorLogin(LoginUsuario.Email);
-            return View(await _publicacaoRepository.ListarComRelacoesAsync(aluno.IdTurma));
+            return View(await _publicacaoRepository.ListarComRelacoesAsync(aluno.IdTurma, aluno.Id));
         }
     }
 }

@@ -6,6 +6,6 @@ namespace PUC.LDSI.Domain.Services.Interfaces
     public interface IProfessorService
     {
         Task<int> IncluirNovoProfessorAsync(string email, string nome);
-        Professor BuscarPorEmail(string email);
+        Task<Professor> BuscarPorEmail(string email);
     }
 }

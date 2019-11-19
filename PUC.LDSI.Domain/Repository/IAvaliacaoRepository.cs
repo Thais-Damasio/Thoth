@@ -8,6 +8,6 @@ namespace PUC.LDSI.Domain.Repository
     {
         Task<Avaliacao> ObterComPublicacaoAsync(int id);
         Task<Avaliacao> ObterComRelacoesAsync(int id);
-        Task<IEnumerable<Avaliacao>> ListarComRelacoesAsync();
+        Task<IEnumerable<Avaliacao>> ListarComRelacoesAsync(int id_professor);
     }
 }

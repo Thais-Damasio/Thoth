@@ -13,9 +13,9 @@ namespace PUC.LDSI.Domain.Services
             _professorRepository = professorRepository;
         }
 
-        public Professor BuscarPorEmail(string email)
+        public async Task<Professor> BuscarPorEmail(string email)
         {
-            return _professorRepository.ObterPorLogin(email);
+            return await _professorRepository.ObterPorLogin(email);
         }
 
         public async Task<int> IncluirNovoProfessorAsync(string email, string nome)

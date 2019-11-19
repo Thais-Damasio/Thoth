@@ -17,20 +17,20 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
     {
         private readonly IAvaliacaoQuestaoService _avaliacaoQuestaoService;
         private readonly IAvaliacaoOpcaoService _avaliacaoOpcaoService;
+        private readonly IAvaliacaoQuestaoRepository _avaliacaoQuestaoRepository;
         private readonly IAvaliacaoRepository _avaliacaoRepo;
-        private AppDbContext _context;
 
         public AvaliacaoQuestaoController(
             IAvaliacaoQuestaoService avaliacaoQuestaoService,
+            IAvaliacaoQuestaoRepository avaliacaoQuestaoRepository,
             IAvaliacaoOpcaoService avaliacaoOpcaoService,
             IAvaliacaoRepository avaliacaoRepo,
-            UserManager<Usuario> _user,
-            AppDbContext context) : base(_user)
+            UserManager<Usuario> _user) : base(_user)
         {
+            _avaliacaoQuestaoRepository = avaliacaoQuestaoRepository;
             _avaliacaoQuestaoService = avaliacaoQuestaoService;
             _avaliacaoOpcaoService = avaliacaoOpcaoService;
             _avaliacaoRepo = avaliacaoRepo;
-            _context = context;
         }
 
         // POST: AvaliacaoQuestao/CreateByAvaliacao
@@ -45,8 +45,6 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         }
 
         // POST: AvaliacaoQuestao/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Tipo,Enunciado,IdAvaliacao,Opcoes")] AvaliacaoQuestao questao)
@@ -68,40 +66,31 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 return View(questao);
             }
         }
-
-        // GET: AvaliacaoQuestao/Delete/5
+        
+        // GET: Avaliacao/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var avaliacaoQuestao = await _context.AvaliacaoQuestoes
-                .Include(a => a.Avaliacao)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (avaliacaoQuestao == null)
+            var avaliacao = await _avaliacaoQuestaoRepository.ObterAsync(id.Value);
+            if (avaliacao == null)
             {
                 return NotFound();
             }
-
-            return View(avaliacaoQuestao);
+            return View(avaliacao);
         }
 
-        // POST: AvaliacaoQuestao/Delete/5
+        // POST: Avaliacao/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var avaliacaoQuestao = await _context.AvaliacaoQuestoes.FindAsync(id);
-            _context.AvaliacaoQuestoes.Remove(avaliacaoQuestao);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Edit", "Avaliacao", new { id = avaliacaoQuestao.IdAvaliacao });
-        }
+            var avaliacaoQuestao = await _avaliacaoQuestaoRepository.ObterAsync(id);
+            await _avaliacaoQuestaoService.ExcluirAsync(id);
 
-        private bool AvaliacaoQuestaoExists(int id)
-        {
-            return _context.AvaliacaoQuestoes.Any(e => e.Id == id);
+            return RedirectToAction("Edit", "Avaliacao", new { id = avaliacaoQuestao.IdAvaliacao });
         }
     }
 }

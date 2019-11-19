@@ -36,6 +36,7 @@ namespace PUC.LDSI.Domain.Entities
         [Display(Name = "Avaliação")]
         public Avaliacao Avaliacao { get; set; }
         public Turma Turma { get; set; }
+        public List<Prova> Provas { get; set; }
 
     }
 }

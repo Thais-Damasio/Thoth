@@ -21,23 +21,23 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         private readonly IAvaliacaoQuestaoService _avaliacaoQuestaoService;
         private readonly IAvaliacaoOpcaoService _avaliacaoOpcaoService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
-        private AppDbContext _context;
+        private readonly IDisciplinaRepository _disciplinaRepository;
 
         public AvaliacaoController(
-            AppDbContext context,
             IAvaliacaoService avaliacaoService,
             IProfessorService professorService,
             IAvaliacaoQuestaoService avaliacaoQuestaoService,
             IAvaliacaoOpcaoService avaliacaoOpcaoService,
             IAvaliacaoRepository avaliacaoRepository,
+            IDisciplinaRepository disciplinaRepository,
             UserManager<Usuario> _user) : base(_user)
         {
-            _context = context;
             _avaliacaoService = avaliacaoService;
             _professorService = professorService;
             _avaliacaoOpcaoService = avaliacaoOpcaoService;
             _avaliacaoQuestaoService = avaliacaoQuestaoService;
             _avaliacaoRepository = avaliacaoRepository;
+            _disciplinaRepository = disciplinaRepository;
         }
 
         // GET: Avaliacao
@@ -47,22 +47,20 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         }
 
         // GET: Avaliacao/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Nome");
+            ViewData["IdDisciplina"] = new SelectList(await _disciplinaRepository.ListarTodosAsync(), "Id", "Nome");
             return View();
         }
                 
         // POST: Avaliacao/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Materia,Descricao,IdDisciplina")] Avaliacao avaliacao)
         {
             if (ModelState.IsValid)
             {
-                var professor = _professorService.BuscarPorEmail(LoginUsuario.Email);
+                var professor = await _professorService.BuscarPorEmail(LoginUsuario.Email);
                 avaliacao.IdProfessor = professor.Id;
 
 
@@ -70,7 +68,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 
                 return RedirectToAction(nameof(Edit), new { id= id_avaliacao });
             }
-            ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Nome", avaliacao.IdDisciplina);
+            ViewData["IdDisciplina"] = new SelectList(await _disciplinaRepository.ListarTodosAsync(), "Id", "Nome", avaliacao.IdDisciplina);
             return View(avaliacao);
         }
 
@@ -87,7 +85,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Nome", avaliacao.IdDisciplina);
+            ViewData["IdDisciplina"] = new SelectList(await _disciplinaRepository.ListarTodosAsync(), "Id", "Nome", avaliacao.IdDisciplina);
             return View(avaliacao);
         }
 
@@ -109,8 +107,6 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         }
 
         // POST: Avaliacao/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Materia,Descricao,IdDisciplina,Id")] Avaliacao avaliacao)
@@ -124,7 +120,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 await _avaliacaoService.AlterarAvaliacaoAsync(avaliacao.Id, avaliacao.Materia, avaliacao.Descricao, avaliacao.IdDisciplina);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdDisciplina"] = new SelectList(_context.Disciplinas, "Id", "Id", avaliacao.IdDisciplina);
+            ViewData["IdDisciplina"] = new SelectList(await _disciplinaRepository.ListarTodosAsync(), "Id", "Id", avaliacao.IdDisciplina);
             return View(avaliacao);
         }
 
@@ -135,33 +131,22 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
             {
                 return NotFound();
             }
-
-            var avaliacao = await _context.Avaliacoes
-                .Include(a => a.Disciplina)
-                .Include(a => a.Professor)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var avaliacao = await _avaliacaoService.ObterComRelacoesAsync(id.Value);
             if (avaliacao == null)
             {
                 return NotFound();
             }
-
             return View(avaliacao);
         }
-
+        
         // POST: Avaliacao/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var avaliacao = await _context.Avaliacoes.FindAsync(id);
-            _context.Avaliacoes.Remove(avaliacao);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            await _avaliacaoService.ExcluirAsync(id);
 
-        private bool AvaliacaoExists(int id)
-        {
-            return _context.Avaliacoes.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

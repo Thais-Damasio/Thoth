@@ -29,6 +29,10 @@ input[type="checkbox"][readonly] {
     color: white;
 }
 
+.uk-text-yellow {
+    color: #c2ac00;
+}
+
 a.uk-hover-danger:hover {
     color: red;
 }

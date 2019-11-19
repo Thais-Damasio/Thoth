@@ -14,23 +14,17 @@ namespace PUC.LDSI.Domain.Services
         private readonly IProvaRepository _provaRepository;
         private readonly IAlunoRepository _alunoRepository;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
-        private readonly IProvaQuestaoRepository _provaQuestaoRepository;
-        private readonly IProvaOpcaoRepository _provaOpcaoRepository;
         private readonly IPublicacaoRepository _publicacaoRepository;
         public ProvaService(
             IProvaRepository provaRepository,
             IPublicacaoRepository publicacaoRepository,
-            IProvaOpcaoRepository provaOpcaoRepository,
-            IProvaQuestaoRepository provaQuestaoRepository,
             IAlunoRepository alunoRepository,
             IAvaliacaoRepository avaliacaoRepository
             )
         {
             _provaRepository = provaRepository;
             _publicacaoRepository = publicacaoRepository;
-            _provaQuestaoRepository = provaQuestaoRepository;
             _alunoRepository = alunoRepository;
-            _provaOpcaoRepository = provaOpcaoRepository;
             _avaliacaoRepository = avaliacaoRepository;
         }
         public async Task<IEnumerable<ProvaQueryResult>> ObterProvasComRelacoes(string login)
@@ -39,19 +33,33 @@ namespace PUC.LDSI.Domain.Services
 
             if (aluno == null) throw new Exception("O aluno não foi localizado!");
             
-            IEnumerable<Prova> provas = await _provaRepository.ObterProvasComRelacoesAsync(aluno.Id);
+            IEnumerable<Publicacao> provas = await _publicacaoRepository.ObterProvasComRelacoesAsync(aluno.Id, aluno.IdTurma);
             List<ProvaQueryResult> provaList = new List<ProvaQueryResult>();
 
-            foreach(Prova prova in provas)
+            foreach(Publicacao pub in provas)
             {
-                var retorno = new ProvaQueryResult
+                if (pub.Provas.Count > 0)
                 {
-                    Avaliacao = prova.Avaliacao,
-                    Publicacao = prova.Publicacao,
-                    NotaObtida = prova.Publicacao.Valor.Value /prova.Questoes.Count * prova.Questoes.Sum(x => x.Nota)
-                };
-
-                provaList.Add(retorno);
+                    var retorno = new ProvaQueryResult
+                    {
+                        Avaliacao = pub.Avaliacao,
+                        Publicacao = pub,
+                        NotaObtida = pub.Valor.Value / pub.Provas.First().Questoes.Count * pub.Provas.First().Questoes.Sum(x => x.Nota),
+                        Criado_Em = pub.Provas.First().CriadoEm
+                    };
+                    provaList.Add(retorno);
+                }
+                else
+                {
+                    var retorno = new ProvaQueryResult
+                    {
+                        Avaliacao = pub.Avaliacao,
+                        Publicacao = pub,
+                        NotaObtida = 0,
+                        Criado_Em = null
+                    };
+                    provaList.Add(retorno);
+                }
             }
 
             return provaList;

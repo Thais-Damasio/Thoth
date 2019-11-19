@@ -15,18 +15,5 @@ namespace PUC.LDSI.DataBase.Repository
         {
             _context = context;
         }
-
-
-        public async Task<ProvaQuestao> ListarComRelacoesAsync(int idProvaQuestao)
-        {
-            var provaQuestao = await _context.ProvaQuestoes
-                                            .Where(e => e.Id == idProvaQuestao)
-                                            .Include(a => a.AvaliacaoQuestao)
-                                            .ThenInclude(a => a.Opcoes)
-                                            .Include(a => a.Opcoes)
-
-                                            .FirstOrDefaultAsync();
-            return provaQuestao;
-        }
     }
 }

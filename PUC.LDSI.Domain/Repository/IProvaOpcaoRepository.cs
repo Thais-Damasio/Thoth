@@ -6,9 +6,5 @@ namespace PUC.LDSI.Domain.Repository
 {
     public interface IProvaOpcaoRepository : IRepository<ProvaOpcao>
     {
-
-        Task<IList<ProvaOpcao>> ObterPorQuestaoProvaAsync(int IdProvaQuestao);
-        Task<ProvaOpcao> ObterComRelacionamentosAsync(int IdProvaQuestao);
-
     }
 }

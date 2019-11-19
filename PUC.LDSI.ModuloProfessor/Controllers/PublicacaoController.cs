@@ -16,21 +16,18 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
 {
     public class PublicacaoController : BaseController
     {
-        private readonly AppDbContext _context;
         private readonly IPublicacaoService _publicacaoService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
         private readonly IPublicacaoRepository _publicacaoRepository;
         private readonly ITurmaRepository _turmaRepository;
 
         public PublicacaoController(
-            AppDbContext context,
             IPublicacaoService publicacaoService,
             IAvaliacaoRepository avaliacaoRepository,
             IPublicacaoRepository publicacaoRepository,
             ITurmaRepository turmaRepository,
             UserManager<Usuario> _user) : base(_user)
         {
-            _context = context;
             _publicacaoService = publicacaoService;
             _avaliacaoRepository = avaliacaoRepository;
             _publicacaoRepository = publicacaoRepository;
@@ -40,8 +37,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         // GET: Publicacao/
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Publicacoes.Include(p => p.Avaliacao).Include(p => p.Turma);
-            return View(await appDbContext.ToListAsync());
+            return View(await _publicacaoRepository.ListarComRelacoesAsync());
         }
 
         // GET: Publicacao/Details/5
@@ -52,10 +48,7 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
                 return NotFound();
             }
 
-            var publicacao = await _context.Publicacoes
-                .Include(p => p.Avaliacao)
-                .Include(p => p.Turma)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var publicacao = await _publicacaoRepository.ObterComRelacoesAsync(id.Value);
             if (publicacao == null)
             {
                 return NotFound();
@@ -85,8 +78,6 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         }
 
         // POST: Publicacao/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Valor,IdAvaliacao,Turmas")] PublicacaoViewModel publicacao)
@@ -130,8 +121,6 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         }
 
         // POST: Publicacao/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DataInicio,DataFim,Valor,Id")] Publicacao publicacao)

@@ -17,21 +17,18 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
     public class DashboardController : BaseController
     {
         private readonly IAvaliacaoService _avaliacaoService;
-        private readonly IAvaliacaoRepository _avaliacaoRepository;
 
         public DashboardController(
             IAvaliacaoService avaliacaoService,
-            IAvaliacaoRepository avaliacaoRepository,
             UserManager<Usuario> _user) : base(_user)
         {
             _avaliacaoService = avaliacaoService;
-            _avaliacaoRepository = avaliacaoRepository;
         }
 
         // GET: Dashboard
         public async Task<IActionResult> Index()
         {
-            return View(await _avaliacaoRepository.ListarComRelacoesAsync());
+            return View(await _avaliacaoService.ListarComRelacoesAsync(LoginUsuario.Email));
         }
     }
 }

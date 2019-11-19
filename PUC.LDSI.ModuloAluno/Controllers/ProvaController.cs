@@ -18,7 +18,6 @@ namespace PUC.LDSI.ModuloAluno.Controllers
         private readonly IAvaliacaoService _AvalicaoService;
 
         public ProvaController(
-            AppDbContext context,
             IProvaService provaService,
             IAlunoService alunoService,
             IAvaliacaoService avaliacaoService,

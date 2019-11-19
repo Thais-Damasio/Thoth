@@ -26,16 +26,5 @@ namespace PUC.LDSI.DataBase.Repository
 
             return prova;
         }
-
-        public async Task<IEnumerable<Prova>> ObterProvasComRelacoesAsync(int IdAluno)
-        {
-            var provas = await _context.Provas
-           .Include(x => x.Publicacao)
-           .Include(p => p.Avaliacao)
-           .Include(x => x.Questoes)
-           .Where(x => x.IdAluno == IdAluno)
-           .ToListAsync();
-            return provas;
-        }
     }
 }

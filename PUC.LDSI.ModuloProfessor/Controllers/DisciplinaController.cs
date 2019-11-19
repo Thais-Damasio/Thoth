@@ -19,7 +19,10 @@ namespace PUC.LDSI.ModuloProfessor.Controllers
         private readonly IDisciplinaService _disciplinaService;
         private readonly IDisciplinaRepository _disciplinaRepository;
 
-        public DisciplinaController(IDisciplinaService disciplinaService, IDisciplinaRepository disciplinaRepository, UserManager<Usuario> _user) : base(_user)
+        public DisciplinaController(
+            IDisciplinaService disciplinaService,
+            IDisciplinaRepository disciplinaRepository,
+            UserManager<Usuario> _user) : base(_user)
         {
             _disciplinaService = disciplinaService;
             _disciplinaRepository = disciplinaRepository;

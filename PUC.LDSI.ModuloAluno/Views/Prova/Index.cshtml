@@ -22,6 +22,9 @@
                             <th class="uk-table-expand">
                                 @Html.DisplayNameFor(model => model.Publicacao.Valor)
                             </th>
+                            <th class="uk-table-expand">
+                                @Html.DisplayNameFor(model => model.Criado_Em)
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,6 +41,16 @@
                                     </td>
                                     <td class="uk-preserve-width">
                                         @Html.DisplayFor(modelItem => item.Publicacao.Valor)
+                                    </td>
+                                    <td class="uk-preserve-width">
+                                        @if (item.Criado_Em == null)
+                                        {
+                                            <span class="uk-alert-danger" style="background: none">Prova Perdida</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.Criado_Em</span>
+                                        }
                                     </td>
                                 </tr>
                             }
